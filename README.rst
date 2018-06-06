@@ -20,8 +20,8 @@ Package is currently in the process of being added to the PyPI distribution site
 Getting Started
 ===============
 
-- Tutorial `notebooks <https://nbviewer.jupyter.org/github/prmiles/notebooks/tree/master/pymcmcstat/index.ipynb>`_
-- `Documentation <http://pymcmcstat.readthedocs.io/>`_
+- Tutorial `notebooks <https://nbviewer.jupyter.org/github/prmiles/notebooks/tree/master/mcmcplot/index.ipynb>`_
+- `Documentation <http://mcmcplot.readthedocs.io/>`_
 
 License
 =======
