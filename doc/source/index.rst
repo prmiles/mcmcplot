@@ -3,13 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to mcmcplot's documentation!
+Welcome to mcmcplotly's documentation!
 ====================================
-The `mcmcplot` package is a Python program for plotting and analyzing Markov Chain Monte Carlo (MCMC) simulations.
+The `mcmcplotly` package is a Python program for plotting and analyzing Markov Chain Monte Carlo (MCMC) simulations using `plotly`.
 
-The `mcmcplot homepage <https://prmiles.wordpress.ncsu.edu/codes/python-packages/mcmcplot/>`_ contains tutorials for users as well as installation instructions.
+The `mcmcplotly homepage <https://prmiles.wordpress.ncsu.edu/codes/python-packages/mcmcplotly/>`_ contains tutorials for users as well as installation instructions.
 
-This code can be found on the `Github project page <https://github.com/prmiles/mcmcplot>`_.  It is open sources and provided under the MIT license.
+This code can be found on the `Github project page <https://github.com/prmiles/mcmcplotly>`_.  It is open sources and provided under the MIT license.
 
 .. toctree::
    :maxdepth: 2
