@@ -1,7 +1,7 @@
 mcmcplot
 ========
 
-|docs| |build| |license| |codacy|
+|docs| |build| |coverage| |license| |codacy|
 
 Plotting routines for analyzing chains from Markov chain Monte Carlo (MCMC) simulation.
 
@@ -47,3 +47,7 @@ page <https://github.com/prmiles/mcmcplot/graphs/contributors>`_
     
 .. |codacy| image:: https://api.codacy.com/project/badge/Grade/f806a77eb498459d8d500d9c81e837aa    
     :target: https://www.codacy.com/app/prmiles/mcmcplotly?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=prmiles/mcmcplotly&amp;utm_campaign=Badge_Grade
+    
+.. |coverage| image:: https://coveralls.io/repos/github/prmiles/mcmcplotly/badge.svg?branch=master
+    :target: https://coveralls.io/github/prmiles/mcmcplotly?branch=master
+
