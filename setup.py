@@ -7,7 +7,7 @@ def read(fname):
     
 # read in version number
 version_dummy = {}
-exec(read('mcmcplot/__version__.py'), version_dummy)
+exec(read('mcmcplotly/__version__.py'), version_dummy)
 __version__ = version_dummy['__version__']
 del version_dummy
 
