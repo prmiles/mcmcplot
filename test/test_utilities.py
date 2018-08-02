@@ -6,7 +6,7 @@ Created on Wed May 30 05:57:34 2018
 @author: prmiles
 """
 
-from mcmcplot import utilities
+from mcmcplotly import utilities
 import unittest
 import numpy as np
 
