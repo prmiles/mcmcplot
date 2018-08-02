@@ -1,3 +1,4 @@
 sphinxcontrib-bibtex
-matplotlib
+matplotlib>=2.2.0
 coveralls
+plotly
