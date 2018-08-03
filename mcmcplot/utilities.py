@@ -11,6 +11,17 @@ from scipy import pi,sin,cos
 import sys
 import math
 
+def generate_plotly_subplot_coords(nparam, ns1, ns2):
+    spid = np.zeros([nparam, 2], dtype = int)
+    counter = 0
+    for ii in range(ns1):
+        for jj in range(ns2):
+            spid[counter, :] = np.array([ii, jj]).reshape(1,2)
+            counter += 1
+            if counter is nparam:
+                break
+    return spid
+
 def generate_subplot_grid(nparam = 2):
     '''
     Generate subplot grid.
