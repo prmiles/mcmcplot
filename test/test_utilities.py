@@ -6,7 +6,7 @@ Created on Wed May 30 05:57:34 2018
 @author: prmiles
 """
 
-from mcmcplot.mpl_plotting import utilities
+from mcmcplot import utilities
 import unittest
 from mock import patch
 import numpy as np
@@ -210,14 +210,14 @@ class ScaleBandWidth(unittest.TestCase):
         self.assertTrue(isinstance(s, np.ndarray), msg = 'Expected array return - received {}'.format(type(s)))
         self.assertEqual(s.size, 1, msg = 'Expect single element array')
         
-    @patch('mcmcplot.mpl_plotting.utilities.iqrange', return_value = -1.0)
+    @patch('mcmcplot.utilities.iqrange', return_value = -1.0)
     def test_array_return_with_iqrange_lt_0(self, mock_iqrange):
         x = np.random.random_sample(size = (1,100))
         s = utilities.scale_bandwidth(x = x)
         self.assertTrue(isinstance(s, np.ndarray), msg = 'Expected array return - received {}'.format(type(s)))
         self.assertEqual(s.size, 1, msg = 'Expect single element array')
         
-    @patch('mcmcplot.mpl_plotting.utilities.iqrange', return_value = 1.0)
+    @patch('mcmcplot.utilities.iqrange', return_value = 1.0)
     def test_array_return_with_iqrange_gt_0(self, mock_iqrange):
         x = np.random.random_sample(size = (1,100))
         s = utilities.scale_bandwidth(x = x)
