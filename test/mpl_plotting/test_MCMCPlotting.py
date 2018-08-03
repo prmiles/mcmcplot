@@ -6,7 +6,7 @@ Created on Thu Jun 21 12:21:24 2018
 @author: prmiles
 """
 
-from pymcmcstat.plotting import MCMCPlotting as MP
+from mcmcplot.mpl_plotting import MCMCPlotting as MP
 import matplotlib.pyplot as plt
 import numpy as np
 import math
