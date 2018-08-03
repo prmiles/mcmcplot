@@ -34,7 +34,7 @@ Contributors
 See the `GitHub contributor
 page <https://github.com/prmiles/mcmcplot/graphs/contributors>`_
 
-.. |docs| image:: https://readthedocs.org/projects/mcmcplotly/badge/?version=latest
+.. |docs| image:: image:: https://readthedocs.org/projects/mcmcplotly/badge/?version=latest
     :target: https://mcmcplotly.readthedocs.io/en/latest/?badge=latest
     :scale: 100%
     
@@ -49,3 +49,4 @@ page <https://github.com/prmiles/mcmcplot/graphs/contributors>`_
     :target: https://www.codacy.com/app/prmiles/mcmcplotly?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=prmiles/mcmcplotly&amp;utm_campaign=Badge_Grade
     
 .. |coverage| image:: https://coveralls.io/repos/github/prmiles/mcmcplotly/badge.svg?branch=master
+    :target: https://coveralls.io/github/prmiles/mcmcplotly?branch=master
