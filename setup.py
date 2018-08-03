@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import codecs
 
 def read(fname):
@@ -21,7 +21,7 @@ setup(
     author_email='prmiles@ncsu.edu',
     license='MIT',
     package_dir={'mcmcplot': 'mcmcplot'},
-    packages=['mcmcplot'],
+    packages=find_packages(),
     zip_safe=False,
     install_requires=['numpy>=1.14', 'scipy>=1.0', 'matplotlib>=2.2.0', 'h5py>=2.7.0', 'statsmodels>=0.9.0', 'plotly>=3.1.0'],
     extras_require = {'docs':['sphinx'], 'plotting':['matplotlib', 'plotly'],},
