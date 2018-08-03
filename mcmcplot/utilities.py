@@ -16,7 +16,7 @@ def generate_plotly_subplot_coords(nparam, ns1, ns2):
     counter = 0
     for ii in range(ns1):
         for jj in range(ns2):
-            spid[counter, :] = np.array([ii, jj]).reshape(1,2)
+            spid[counter, :] = np.array([ii + 1, jj + 1]).reshape(1,2)
             counter += 1
             if counter is nparam:
                 break

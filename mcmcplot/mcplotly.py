@@ -8,7 +8,7 @@ Created on Wed Jan 31 12:54:16 2018
 
 # import required packages
 from __future__ import division
-from .utilities import generate_names, setup_plot_features, make_x_grid
+from .utilities import setup_plot_features, make_x_grid
 from .utilities import generate_plotly_subplot_coords
 
 import plotly
@@ -34,9 +34,9 @@ def plot_density_panel(chains, names = None, hist_on = False, figsizeinches = No
     nsimu, nparam = chains.shape # number of rows, number of columns
     ns1, ns2, names, figsizeinches = setup_plot_features(nparam = nparam, names = names, figsizeinches = figsizeinches)
 
-#    spid = generate_plotly_subplot_coords(nparam = nparam, ns1 = ns1, ns2 = ns2)
+    spid = generate_plotly_subplot_coords(nparam = nparam, ns1 = ns1, ns2 = ns2)
 #    f = plt.figure(dpi=100, figsize=(figsizeinches)) # initialize figure
-#    fig = plotly.tools.make_subplots(rows=ns1, cols=ns2, subplot_titles=(names))
+    fig = plotly.tools.make_subplots(rows=ns1, cols=ns2, subplot_titles=(names))
     trace = []
     for ii in range(nparam):
         # define chain
@@ -49,8 +49,7 @@ def plot_density_panel(chains, names = None, hist_on = False, figsizeinches = No
         kde = KDEMultivariate(chain, bw = 'normal_reference', var_type = 'c')
         
         trace.append(plotly.graph_objs.Scatter(x = chain_grid, y = kde.pdf(chain_grid)))
-
-    fig = plotly.graph_objs.Figure(data=trace)
+        fig.append_trace(trace[ii], spid[ii,0] + 1, spid[ii,1] + 1)
     
     plotly.offline.plot(fig, filename = str('{}.html'.format('densly')))
 
