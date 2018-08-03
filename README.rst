@@ -34,7 +34,7 @@ Contributors
 See the `GitHub contributor
 page <https://github.com/prmiles/mcmcplot/graphs/contributors>`_
 
-.. |docs| image:: image:: https://readthedocs.org/projects/mcmcplot/badge/?version=latest
+.. |docs| image:: https://readthedocs.org/projects/mcmcplot/badge/?version=latest
     :target: https://mcmcplot.readthedocs.io/en/latest/?badge=latest
     :scale: 100%
     
