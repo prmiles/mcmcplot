@@ -19,15 +19,17 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'mcmcplot'
+project = 'mcmcplotly'
 copyright = '2018, Paul Miles'
 author = 'Paul Miles'
 
 # The short X.Y version
-version = ''
+with open('../../mcmcplotly/__version__.py','r') as f:
+    version = f.read()
+    release = version
+#version = ''
 # The full version, including alpha/beta/rc tags
-release = '0.0.0'
-
+print(version)
 
 # -- General configuration ---------------------------------------------------
 
@@ -41,10 +43,17 @@ release = '0.0.0'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
     'sphinx.ext.coverage',
+    'sphinx.ext.imgmath',
+    'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'sphinx.ext.intersphinx',
+    'sphinxcontrib.bibtex',
 ]
+
+intersphinx_mapping = {'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+                       'python': ('https://docs.python.org/3', None)}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['.templates']
@@ -79,7 +88,22 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
+html_theme_path = ["_themes", ]
+html_theme_options = {
+    'canonical_url': '',
+    'analytics_id': '',
+    'logo_only': False,
+    'display_version': True,
+    'prev_next_buttons_location': 'both',
+    'style_external_links': False,
+    # Toc options
+    'collapse_navigation': False,
+    'sticky_navigation': True,
+    'navigation_depth': 2,
+    'includehidden': True,
+    'titles_only': False
+}
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -106,7 +130,7 @@ html_static_path = ['.static']
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'mcmcplotdoc'
+htmlhelp_basename = 'mcmcplotlydoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -133,7 +157,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'mcmcplot.tex', 'mcmcplot Documentation',
+    (master_doc, 'mcmcplotly.tex', 'mcmcplotly Documentation',
      'Paul Miles', 'manual'),
 ]
 
@@ -143,7 +167,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'mcmcplot', 'mcmcplot Documentation',
+    (master_doc, 'mcmcplotly', 'mcmcplotly Documentation',
      [author], 1)
 ]
 
@@ -154,15 +178,15 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'mcmcplot', 'mcmcplot Documentation',
-     author, 'mcmcplot', 'One line description of project.',
+    (master_doc, 'mcmcplotly', 'mcmcplotly Documentation',
+     author, 'mcmcplotly', 'One line description of project.',
      'Miscellaneous'),
 ]
 
 
 # -- Extension configuration -------------------------------------------------
 
-# -- Options for intersphinx extension ---------------------------------------
+# -- Options for todo extension ----------------------------------------------
 
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
+# If true, `todo` and `todoList` produce output, else they produce nothing.
+todo_include_todos = True
