@@ -23,7 +23,7 @@ setup(
     package_dir={'mcmcplot': 'mcmcplot'},
     packages=['mcmcplot'],
     zip_safe=False,
-    install_requires=['numpy>=1.7', 'scipy>=0.16', 'plotly'],
+    install_requires=['numpy>=1.14', 'scipy>=1.0', 'matplotlib>=2.2.0', 'h5py>=2.7.0', 'statsmodels>=0.9.0', 'plotly>=3.1.0'],
     extras_require = {'docs':['sphinx'], 'plotting':['matplotlib', 'plotly'],},
     classifiers=['License :: OSI Approved :: MIT License',
                    'Natural Language :: English',
