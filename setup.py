@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 import codecs
 
 def read(fname):
@@ -7,23 +7,23 @@ def read(fname):
     
 # read in version number
 version_dummy = {}
-exec(read('mcmcplotly/__version__.py'), version_dummy)
+exec(read('mcmcplot/__version__.py'), version_dummy)
 __version__ = version_dummy['__version__']
 del version_dummy
 
 setup(
-    name='mcmcplotly',
+    name='mcmcplot',
     version=__version__,
-    description='A library to plot and analyze chains from mcmc simulations using plotly',
+    description='A library to plot and analyze chains from mcmc simulations',
     url='https://github.com/prmiles/mcmcplot',
-    download_url='https://github.com/prmiles/mcmcplotly',
+    download_url='https://github.com/prmiles/mcmcplot',
     author='Paul Miles',
     author_email='prmiles@ncsu.edu',
     license='MIT',
-    package_dir={'mcmcplotly': 'mcmcplotly'},
-    packages=['mcmcplotly'],
+    package_dir={'mcmcplot': 'mcmcplot'},
+    packages=find_packages(),
     zip_safe=False,
-    install_requires=['numpy>=1.7', 'scipy>=0.16', 'plotly'],
+    install_requires=['numpy>=1.14', 'scipy>=1.0', 'matplotlib>=2.2.0', 'h5py>=2.7.0', 'statsmodels>=0.9.0', 'plotly>=3.1.0'],
     extras_require = {'docs':['sphinx'], 'plotting':['matplotlib', 'plotly'],},
     classifiers=['License :: OSI Approved :: MIT License',
                    'Natural Language :: English',
