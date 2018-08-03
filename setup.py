@@ -7,21 +7,21 @@ def read(fname):
     
 # read in version number
 version_dummy = {}
-exec(read('mcmcplotly/__version__.py'), version_dummy)
+exec(read('mcmcplot/__version__.py'), version_dummy)
 __version__ = version_dummy['__version__']
 del version_dummy
 
 setup(
-    name='mcmcplotly',
+    name='mcmcplot',
     version=__version__,
-    description='A library to plot and analyze chains from mcmc simulations using plotly',
+    description='A library to plot and analyze chains from mcmc simulations',
     url='https://github.com/prmiles/mcmcplot',
-    download_url='https://github.com/prmiles/mcmcplotly',
+    download_url='https://github.com/prmiles/mcmcplot',
     author='Paul Miles',
     author_email='prmiles@ncsu.edu',
     license='MIT',
-    package_dir={'mcmcplotly': 'mcmcplotly'},
-    packages=['mcmcplotly'],
+    package_dir={'mcmcplot': 'mcmcplot'},
+    packages=['mcmcplot'],
     zip_safe=False,
     install_requires=['numpy>=1.7', 'scipy>=0.16', 'plotly'],
     extras_require = {'docs':['sphinx'], 'plotting':['matplotlib', 'plotly'],},
