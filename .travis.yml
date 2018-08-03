@@ -9,7 +9,7 @@ install:
   - python setup.py install
 script:
   - python -m unittest discover -s "test" -p "test*.py"
-  - coverage run --source=mcmcplotly -m unittest discover -s "test" -p "test*.py"
+  - coverage run --source=mcmcplot -m unittest discover -s "test" -p "test*.py"
 notifications:
   email: 
     - prmiles@ncsu.edu
