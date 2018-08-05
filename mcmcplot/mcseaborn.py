@@ -26,9 +26,9 @@ def plot_joint_distributions(chains, names = None, sns_style = 'white', settings
         'skip': 1,
         'sns_style': sns_style,
         'sns_settings': sns.axes_style(style = sns_style),
-        'jd_settings': {'kind': 'kde', 'height': 7, 'space': 0, 'stat_func': None, 
-                        'color': None, 'ratio': 5, 'dropna': True, 'xlim': None, 
-                        'ylim': None, 'joint_kws': None, 'marginal_kws': None, 'annot_kws': None},
+        'jd_settings': dict(kind='kde', stat_func=None, color=None, height=6,
+                            ratio=5, space=0, dropna=True, xlim=None, ylim=None,
+                            joint_kws=None, marginal_kws=None, annot_kws=None)
         }
     
     settings = check_settings(default_settings = default_settings, user_settings = settings)
@@ -58,9 +58,9 @@ def plot_paired_density_matrix(chains, names = None, sns_style = 'white', index 
     'skip': 1,
     'sns_style': sns_style,
     'sns_settings': sns.axes_style(style = sns_style),
-    'pg_settings': {'hue': None, 'hue_order': None, 'palette': None, 'hue_kws': None,
-                     'vars': None, 'x_vars': None, 'y_vars': None, 'diag_sharey': True,
-                     'height': 2.5, 'aspect': 1, 'despine': True, 'dropna': True, 'size': None},
+    'pg_settings': dict(hue=None, hue_order=None, palette=None, hue_kws=None,
+                        vars=None, x_vars=None, y_vars=None, diag_sharey=True,
+                        height=2.5, aspect=1, despine=True, dropna=True, size=None),
     'ld_type': sns.kdeplot,
     'ld_settings': {},
     'md_type': sns.kdeplot,

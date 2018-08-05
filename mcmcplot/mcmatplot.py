@@ -23,7 +23,7 @@ except ImportError as e:
     warnings.warn(str("Exception raised importing statsmodels.nonparametric.kernel_density - plot_density_panel will not work. {}".format(e)))
 
 # --------------------------------------------
-def plot_density_panel(chains, names = None, hist_on = False, figsizeinches = None):
+def plot_density_panel(chains, names = None, settings = None):
     '''
     Plot marginal posterior densities
 
@@ -33,10 +33,23 @@ def plot_density_panel(chains, names = None, hist_on = False, figsizeinches = No
         * **hist_on** (:py:class:`bool`): Flag to include histogram on density plot
         * **figsizeinches** (:py:class:`list`): Specify figure size in inches [Width, Height]
     '''
+    default_settings = {
+    'maxpoints': 500,
+    'fig_settings': dict(figsize = (5,4), dpi = 100),
+    'kde_settings': dict(bw = 'normal_reference', var_type = 'c'),
+    'plot_settings': dict(color = 'k', marker = None, linestyle = '-', linewidth = 3),
+    'xlabel_settings': {},
+    'ylabel_settings': {},
+    'hist_on': False,
+    'hist_settings': dict(density = True),
+    }
+    settings = check_settings(default_settings = default_settings, user_settings = settings)
+    
     nsimu, nparam = chains.shape # number of rows, number of columns
-    ns1, ns2, names, figsizeinches = setup_plot_features(nparam = nparam, names = names, figsizeinches = figsizeinches)
-
-    f = plt.figure(dpi=100, figsize=(figsizeinches)) # initialize figure
+    ns1, ns2 = generate_subplot_grid(nparam)
+    names = generate_names(nparam, names)
+    
+    f = plt.figure(**settings['fig_settings']) # initialize figure
     for ii in range(nparam):
         # define chain
         chain = chains[:,ii].reshape(nsimu,1) # check indexing
@@ -45,18 +58,18 @@ def plot_density_panel(chains, names = None, hist_on = False, figsizeinches = No
         chain_grid = make_x_grid(chain)
         
         # Compute kernel density estimate
-        kde = KDEMultivariate(chain, bw = 'normal_reference', var_type = 'c')
+        kde = KDEMultivariate(chain, **settings['kde_settings'])
 
         # plot density on subplot
         plt.subplot(ns1,ns2,ii+1)
              
-        if hist_on == True: # include histograms
-            hist(chain, normed=True)
+        if settings['hist_on'] is True: # include histograms
+            hist(chain, **settings['hist_settings'])
             
-        plt.plot(chain_grid, kde.pdf(chain_grid), 'k')
+        plt.plot(chain_grid, kde.pdf(chain_grid), **settings['plot_settings'])
         # format figure
-        plt.xlabel(names[ii])
-        plt.ylabel(str('$\pi$({}$|M^{}$)'.format(names[ii], '{data}')))
+        plt.xlabel(names[ii], **settings['xlabel_settings'])
+        plt.ylabel(str('$\pi$({}$|M^{}$)'.format(names[ii], '{data}')), **settings['ylabel_settings'])
         plt.tight_layout(rect=[0, 0.03, 1, 0.95],h_pad=1.0) # adjust spacing
 
     return f
@@ -91,7 +104,7 @@ def plot_histogram_panel(chains, names = None, figsizeinches = None):
     return f
         
 # --------------------------------------------
-def plot_chain_panel(chains, names = None, figsizeinches = None, maxpoints = 500, settings = None):
+def plot_chain_panel(chains, names = None, settings = None):
     """
     Plot sampling chain for each parameter
 
@@ -103,13 +116,13 @@ def plot_chain_panel(chains, names = None, figsizeinches = None, maxpoints = 500
     """
     default_settings = {
     'maxpoints': 500,
-    'fig_settings': {'figsize': (5,4), 'dpi': 100},
-    'plot_settings': {'color': 'b', 'marker': '.', 'linestyle': 'none'},
+    'fig_settings': dict(figsize = (5,4), dpi = 100),
+    'plot_settings': dict(color = 'b', marker = '.', linestyle = 'none'),
     'xlabel_settings': {'s': 'Iteration'},
     'ylabel_settings': {},
     'add_pm2std': False,
-    'mean_settings': {'color': 'k', 'marker': None, 'linestyle': '-', 'linewidth': 3},
-    'sig_settings': {'color': 'r', 'marker': None, 'linestyle': '--', 'linewidth': 3},
+    'mean_settings': dict(color = 'k', marker = None, linestyle = '-', linewidth = 3),
+    'sig_settings': dict(color = 'r', marker = None, linestyle = '--', linewidth = 3),
     }
     settings = check_settings(default_settings = default_settings, user_settings = settings)
 
