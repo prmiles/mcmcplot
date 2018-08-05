@@ -30,7 +30,8 @@ class PlotDensityPanel(unittest.TestCase):
     def test_basic_plot_features_with_hist_on(self):
         npar = 3
         chains = np.random.random_sample(size = (100,npar))
-        f = MP.plot_density_panel(chains = chains, hist_on = True)
+        settings = {'hist_on': True}
+        f = MP.plot_density_panel(chains = chains, settings = settings)
         for ii in range(npar):
             name = str('$p_{{{}}}$'.format(ii))
             self.assertEqual(f.axes[ii].get_xlabel(), name, msg = str('Should be {}'.format(name)))
@@ -43,7 +44,7 @@ class PlotDensityPanel(unittest.TestCase):
 class PlotChainPanel(unittest.TestCase):
     def test_basic_plot_features_nsimu_lt_maxpoints(self):
         chains = np.random.random_sample(size = (100,2))
-        f = MP.plot_chain_panel(chains = chains)
+        f, _ = MP.plot_chain_panel(chains = chains)
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         x2, y2 = f.axes[1].lines[0].get_xydata().T
         self.assertTrue(np.array_equal(y1, chains[:,0]), msg = 'Expect y1 to match column 1')
@@ -55,7 +56,7 @@ class PlotChainPanel(unittest.TestCase):
     def test_basic_plot_features_nsimu_gt_maxpoints(self):
         nsimu = 1000
         chains = np.random.random_sample(size = (nsimu,2))
-        f = MP.plot_chain_panel(chains = chains)
+        f, _ = MP.plot_chain_panel(chains = chains)
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         x2, y2 = f.axes[1].lines[0].get_xydata().T
         skip = int(math.floor(nsimu/500))
