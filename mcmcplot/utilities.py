@@ -11,6 +11,26 @@ from scipy import pi,sin,cos
 import sys
 import math
 
+def check_settings(default_settings, user_settings = None):
+        
+        settings = default_settings.copy()
+        
+        options = list(default_settings.keys())
+        if user_settings is None:
+            user_settings = {}
+        user_options = list(user_settings.keys())
+        for ii in range(len(user_options)):
+            if user_options[ii] in options:
+                # check if checking a dictionary
+                if isinstance(settings[user_options[ii]], dict):
+                    settings[user_options[ii]] = check_settings(settings[user_options[ii]], user_settings[user_options[ii]])
+                else:
+                    settings[user_options[ii]] = user_settings[user_options[ii]]
+            if user_options[ii] not in options:
+                settings[user_options[ii]] = user_settings[user_options[ii]]
+                
+        return settings
+    
 def generate_plotly_subplot_coords(nparam, ns1, ns2):
     sprow = []
     spcol = []
