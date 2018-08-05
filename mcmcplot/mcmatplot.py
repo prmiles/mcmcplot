@@ -12,6 +12,8 @@ import math
 import matplotlib.pyplot as plt
 from pylab import hist
 from .utilities import generate_names, setup_plot_features, make_x_grid
+from .utilities import check_settings, generate_subplot_grid
+import numpy as np
 
 import warnings
 
@@ -89,7 +91,7 @@ def plot_histogram_panel(chains, names = None, figsizeinches = None):
     return f
         
 # --------------------------------------------
-def plot_chain_panel(chains, names = None, figsizeinches = None, maxpoints = 500):
+def plot_chain_panel(chains, names = None, figsizeinches = None, maxpoints = 500, settings = None):
     """
     Plot sampling chain for each parameter
 
@@ -99,30 +101,50 @@ def plot_chain_panel(chains, names = None, figsizeinches = None, maxpoints = 500
         * **figsizeinches** (:py:class:`list`): Specify figure size in inches [Width, Height]
         * **maxpoints** (:py:class:`int`): Max number of display points - keeps scatter plot from becoming overcrowded
     """
+    default_settings = {
+    'maxpoints': 500,
+    'fig_settings': {'figsize': (5,4), 'dpi': 100},
+    'plot_settings': {'color': 'b', 'marker': '.', 'linestyle': 'none'},
+    'xlabel_settings': {'s': 'Iteration'},
+    'ylabel_settings': {},
+    'add_pm2std': False,
+    'mean_settings': {'color': 'k', 'marker': None, 'linestyle': '-', 'linewidth': 3},
+    'sig_settings': {'color': 'r', 'marker': None, 'linestyle': '--', 'linewidth': 3},
+    }
+    settings = check_settings(default_settings = default_settings, user_settings = settings)
+
     nsimu, nparam = chains.shape # number of rows, number of columns
-    ns1, ns2, names, figsizeinches = setup_plot_features(nparam = nparam, names = names, figsizeinches = figsizeinches)
+    ns1, ns2 = generate_subplot_grid(nparam)
+    names = generate_names(nparam, names)
     
     skip = 1
-    if nsimu > maxpoints:
-        skip = int(math.floor(nsimu/maxpoints))
+    if nsimu > settings['maxpoints']:
+        skip = int(math.floor(nsimu/settings['maxpoints']))
     
-    f = plt.figure(dpi=100, figsize=(figsizeinches)) # initialize figure
+    f = plt.figure(**settings['fig_settings']) # initialize figure
     for ii in range(nparam):
         # define chain
         chain = chains[:,ii].reshape(nsimu,1) # check indexing
         
         # plot chain on subplot
         plt.subplot(ns1,ns2,ii+1)
-        plt.plot(range(0,nsimu,skip), chain[range(0,nsimu,skip),0], '.b')
+        plt.plot(range(0,nsimu,skip), chain[range(0,nsimu,skip),0], **settings['plot_settings'])
         # format figure
-        plt.xlabel('Iteration')
-        plt.ylabel(str('{}'.format(names[ii])))
+        plt.xlabel(**settings['xlabel_settings'])
+        plt.ylabel(str('{}'.format(names[ii])), **settings['ylabel_settings'])
         if ii+1 <= ns1*ns2 - ns2:
             plt.xlabel('')
             
         plt.tight_layout(rect=[0, 0.03, 1, 0.95],h_pad=1.0) # adjust spacing
         
-    return f
+        if settings['add_pm2std'] is True:
+            mu = np.mean(chain)
+            sig = np.std(chain)
+            plt.plot(range(0,nsimu), np.ones([nsimu,1])*mu, **settings['mean_settings'])
+            plt.plot(range(0,nsimu), np.ones([nsimu,1])*mu + 2*sig, **settings['sig_settings'])
+            plt.plot(range(0,nsimu), np.ones([nsimu,1])*mu - 2*sig, **settings['sig_settings'])
+        
+    return f, settings
         
 # --------------------------------------------
 def plot_pairwise_correlation_panel(chains, names = None, figsizeinches = None, skip = 1):
