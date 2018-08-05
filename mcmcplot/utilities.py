@@ -12,15 +12,17 @@ import sys
 import math
 
 def generate_plotly_subplot_coords(nparam, ns1, ns2):
-    spid = np.zeros([nparam, 2], dtype = int)
+    sprow = []
+    spcol = []
     counter = 0
     for ii in range(ns1):
         for jj in range(ns2):
-            spid[counter, :] = np.array([ii + 1, jj + 1]).reshape(1,2)
+            sprow.append(ii + 1)
+            spcol.append(jj + 1)
             counter += 1
             if counter is nparam:
                 break
-    return spid
+    return sprow, spcol
 
 def generate_subplot_grid(nparam = 2):
     '''
