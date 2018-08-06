@@ -29,7 +29,7 @@ def plot_joint_distributions(chains, names = None, sns_style = 'white', settings
         'skip': 1,
         'sns_style': sns_style,
         'sns': sns.axes_style(style = sns_style),
-        'jointplot': dict(kind='kde', height=6, space=0)
+        'jointplot': dict(kind='kde', data = None, height = 6.0, space=0)
         }
     
     settings = check_settings(default_settings = default_settings, user_settings = settings)
@@ -46,7 +46,8 @@ def plot_joint_distributions(chains, names = None, sns_style = 'white', settings
             chain2 = pd.Series(chains[inds,jj-1], name=names[jj-1])
             
             # Show the joint distribution using kernel density estimation
-            g.append(sns.jointplot(chain1, chain2, **settings['jointplot']))
+            a = sns.jointplot(x = chain1, y = chain2, **settings['jointplot'])
+            g.append(a)
             
     return g, settings
 
