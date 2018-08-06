@@ -19,26 +19,25 @@ def plot_joint_distributions(chains, names = None, sns_style = 'white', settings
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain for each parameter
         * **names** (:py:class:`list`): List of strings - name of each parameter
-        * **figsizeinches** (:py:class:`list`): Specify figure size in inches [Width, Height]
-        * **skip** (:py:class:`int`): Indicates step size to be used when plotting elements from the chain
+        * **sns_style** (:py:class:`str`): Style for seaborn plot.  Default is `white`.
+        * **settings** (:py:class:`dict`): Settings for features of this method.
+        
+    Returns:
+        * (:py:class:`tuple`): (figure handle, settings actually used in program)
     """
     default_settings = {
         'skip': 1,
         'sns_style': sns_style,
-        'sns_settings': sns.axes_style(style = sns_style),
-        'jd_settings': dict(kind='kde', stat_func=None, color=None, height=6,
-                            ratio=5, space=0, dropna=True, xlim=None, ylim=None,
-                            joint_kws=None, marginal_kws=None, annot_kws=None)
+        'sns': sns.axes_style(style = sns_style),
+        'jointplot': dict(kind='kde', height=6, space=0)
         }
     
     settings = check_settings(default_settings = default_settings, user_settings = settings)
-    sns.set_style(settings['sns_style'], settings['sns_settings'])
+    sns.set_style(settings['sns_style'], settings['sns'])
     
     nsimu, nparam = chains.shape # number of rows, number of columns
-    
-    inds = range(0, nsimu, settings['skip'])
-    
     names = generate_names(nparam = nparam, names = names)
+    inds = range(0, nsimu, settings['skip'])
       
     g = []
     for jj in range(2,nparam+1):
@@ -47,29 +46,39 @@ def plot_joint_distributions(chains, names = None, sns_style = 'white', settings
             chain2 = pd.Series(chains[inds,jj-1], name=names[jj-1])
             
             # Show the joint distribution using kernel density estimation
-            g.append(sns.jointplot(chain1, chain2, **settings['jd_settings']))
+            g.append(sns.jointplot(chain1, chain2, **settings['jointplot']))
             
     return g, settings
 
-
-    
 def plot_paired_density_matrix(chains, names = None, sns_style = 'white', index = None, settings = None):
+    """
+    Plot paired density matrix.
+    
+    https://seaborn.pydata.org/generated/seaborn.pairgrid.html
+
+    Args:
+        * **chains** (:class:`~numpy.ndarray`): Sampling chain for each parameter
+        * **names** (:py:class:`list`): List of strings - name of each parameter
+        * **sns_style** (:py:class:`str`): Style for seaborn plot.  Default is `white`.
+        * **settings** (:py:class:`dict`): Settings for features of this method.
+        
+    Returns:
+        * (:py:class:`tuple`): (figure handle, settings actually used in program)
+    """
     default_settings = {
     'skip': 1,
     'sns_style': sns_style,
-    'sns_settings': sns.axes_style(style = sns_style),
-    'pg_settings': dict(hue=None, hue_order=None, palette=None, hue_kws=None,
-                        vars=None, x_vars=None, y_vars=None, diag_sharey=True,
-                        height=2.5, aspect=1, despine=True, dropna=True, size=None),
+    'sns': sns.axes_style(style = sns_style),
+    'pairgrid': dict(diag_sharey = False, height=2.5),
     'ld_type': sns.kdeplot,
-    'ld_settings': {},
+    'ld': {},
     'md_type': sns.kdeplot,
-    'md_settings': {},
+    'md': {},
     'ud_type': sns.scatterplot,
-    'ud_settings': {},
+    'ud': {},
     }
     settings = check_settings(default_settings = default_settings, user_settings = settings)
-    sns.set_style(settings['sns_style'], settings['sns_settings'])
+    sns.set_style(settings['sns_style'], settings['sns'])
     
     nsimu, nparam = chains.shape # number of rows, number of columns
     names = generate_names(nparam = nparam, names = names)
@@ -78,8 +87,8 @@ def plot_paired_density_matrix(chains, names = None, sns_style = 'white', index 
     if index is not None: # a valid categorical column must be appended in order to use hue
         df = df.assign(index = index)
     
-    g = sns.PairGrid(df, **settings['pg_settings'])
-    g.map_lower(settings['ld_type'], **settings['ld_settings'])
-    g.map_upper(settings['ud_type'], **settings['ud_settings'])
-    g.map_diag(settings['md_type'], **settings['md_settings'])
+    g = sns.PairGrid(df, **settings['pairgrid'])
+    g.map_lower(settings['ld_type'], **settings['ld'])
+    g.map_upper(settings['ud_type'], **settings['ud'])
+    g.map_diag(settings['md_type'], **settings['md'])
     return g, settings

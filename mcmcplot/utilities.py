@@ -277,6 +277,27 @@ def generate_ellipse(mu, cmat, ndp = 100):
     
     return x, y
 
+def generate_ellipse_plot_points(x, y, ndp = 100):
+    '''
+    Generates points for a probability contour ellipse for 2 columns of chain
+
+    Args:
+        * **x** (:class:`~numpy.ndarray`): chain 1
+        * **y** (:class:`~numpy.ndarray`): chain 2
+        
+    Returns:
+        * (:py:class:`dict`): 50% and 95% probability contours.
+    '''
+    c50 = 1.3863 # critical values from chisq(2) distribution
+    c95 = 5.9915
+    
+    sig = np.cov(x.reshape(x.size,), y.reshape(y.size,))
+    
+    mu = np.mean(np.array([x, y]), axis = 1)
+    xe50, ye50 = generate_ellipse(mu, c50*sig, ndp = ndp)
+    xe95, ye95 = generate_ellipse(mu, c95*sig, ndp = ndp)
+    return {'xe50': xe50, 'ye50': ye50, 'xe95': xe95, 'ye95': ye95}
+
 def check_symmetric(a, tol=1e-8):
     '''
     Check if array is symmetric by comparing with transpose.
