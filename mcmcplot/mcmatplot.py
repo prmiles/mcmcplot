@@ -196,7 +196,7 @@ def plot_pairwise_correlation_panel(chains, names = None, settings = None):
     'skip': 1,
     'fig': dict(figsize = (7,5), dpi = 100),
     'plot': dict(color = 'b', marker = '.', linestyle = 'none'),
-    'xlabel': {'s': 'Iteration'},
+    'xlabel': {},
     'ylabel': {},
     'title': {},
     'add_5095_contours': False,
