@@ -125,17 +125,37 @@ class PlotPairwiseCorrelationPanel(unittest.TestCase):
         chains = np.random.random_sample(size = (100,2))
         f, _ = MP.plot_pairwise_correlation_panel(chains = chains)
         x1, y1 = f.axes[0].lines[0].get_xydata().T
+        self.assertTrue(np.array_equal(x1, chains[:,0]), msg = 'Expect x1 to match column 0')
+        self.assertTrue(np.array_equal(y1, chains[:,1]), msg = 'Expect y1 to match column 1')
+        for ai in f.axes:
+            self.assertEqual(ai.get_title(), '', msg = 'Should be blank')
+        self.assertEqual(f.axes[0].get_xlabel(),'$p_{0}$', msg = 'Expect $p_{0}$')
+        self.assertEqual(f.axes[0].get_ylabel(),'$p_{1}$', msg = 'Expect $p_{1}$')
+        plt.close()
+        
+    def test_basic_plot_features_2c_w_contours(self):
+        chains = np.random.random_sample(size = (100,2))
+        f, _ = MP.plot_pairwise_correlation_panel(chains = chains, settings = dict(add_5095_contours = True))
+        x1, y1 = f.axes[0].lines[0].get_xydata().T
         
         self.assertTrue(np.array_equal(x1, chains[:,0]), msg = 'Expect x1 to match column 0')
         self.assertTrue(np.array_equal(y1, chains[:,1]), msg = 'Expect y1 to match column 1')
-        
+        self.assertEqual(len(f.axes[0].lines), 3, msg = 'Expect 3 lines')
         for ai in f.axes:
             self.assertEqual(ai.get_title(), '', msg = 'Should be blank')
-            
         self.assertEqual(f.axes[0].get_xlabel(),'$p_{0}$', msg = 'Expect $p_{0}$')
-        
         self.assertEqual(f.axes[0].get_ylabel(),'$p_{1}$', msg = 'Expect $p_{1}$')
-            
+        plt.close()
+        
+    def test_basic_plot_features_2c_w_contours_and_legend(self):
+        chains = np.random.random_sample(size = (100,2))
+        f, _ = MP.plot_pairwise_correlation_panel(chains = chains, settings = dict(add_5095_contours = True, add_legend = True))
+        x1, y1 = f.axes[0].lines[0].get_xydata().T
+        
+        self.assertTrue(np.array_equal(x1, chains[:,0]), msg = 'Expect x1 to match column 0')
+        self.assertTrue(np.array_equal(y1, chains[:,1]), msg = 'Expect y1 to match column 1')
+        self.assertEqual(len(f.axes[0].lines), 3, msg = 'Expect 3 lines')
+        self.assertEqual(len(f.legends), 1, msg = 'Expect legend')
         plt.close()
         
 # --------------------------

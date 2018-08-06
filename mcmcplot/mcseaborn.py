@@ -92,3 +92,19 @@ def plot_paired_density_matrix(chains, names = None, sns_style = 'white', index 
     g.map_upper(settings['ud_type'], **settings['ud'])
     g.map_diag(settings['md_type'], **settings['md'])
     return g, settings
+
+class Plot:
+    '''
+    Wrapper routines for analyzing/plotting sampling chains from MCMC process.
+    
+    Uses methods from the `seaborn` package:
+    
+    https://seaborn.pydata.org/
+
+    Attributes:
+        - :meth:`~plot_joint_distributions`
+        - :meth:`~plot_paired_density_matrix`
+    '''
+    def __init__(self):
+        self.plot_joint_distributions = plot_joint_distributions
+        self.plot_paired_density_matrix = plot_paired_density_matrix

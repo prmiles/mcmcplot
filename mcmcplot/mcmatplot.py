@@ -200,7 +200,7 @@ def plot_pairwise_correlation_panel(chains, names = None, settings = None):
     'ylabel': {},
     'title': {},
     'add_5095_contours': False,
-    'plot_50': dict(color = 'r', marker = None, linewidth = 2, linestyle = '--', label = '50%'),
+    'plot_50': dict(color = 'g', marker = None, linewidth = 2, linestyle = '--', label = '50%'),
     'plot_95': dict(color = 'r', marker = None, linewidth = 2, linestyle = '--', label = '95%'),
     'add_legend': False,
     'legend': dict(loc = 1),
@@ -300,7 +300,11 @@ def plot_chain_metrics(chain, name = None, settings = None):
     
 class Plot:
     '''
-    Plotting routines for analyzing sampling chains from MCMC process.
+    Wrapper routines for analyzing/plotting sampling chains from MCMC process.
+    
+    Uses methods from the `matplotlib` package:
+    
+    https://matplotlib.org/
 
     Attributes:
         - :meth:`~plot_density_panel`
