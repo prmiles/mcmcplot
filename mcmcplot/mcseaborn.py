@@ -54,7 +54,7 @@ def plot_paired_density_matrix(chains, names = None, sns_style = 'white', index 
     """
     Plot paired density matrix.
     
-    https://seaborn.pydata.org/generated/seaborn.pairgrid.html
+    https://seaborn.pydata.org/generated/seaborn.PairGrid.html
 
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain for each parameter
