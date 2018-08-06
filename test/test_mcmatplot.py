@@ -18,7 +18,7 @@ class PlotDensityPanel(unittest.TestCase):
     def test_basic_plot_features(self):
         npar = 3
         chains = np.random.random_sample(size = (100,npar))
-        f = MP.plot_density_panel(chains = chains)
+        f, _ = MP.plot_density_panel(chains = chains)
         for ii in range(npar):
             name = str('$p_{{{}}}$'.format(ii))
             self.assertEqual(f.axes[ii].get_xlabel(), name, msg = str('Should be {}'.format(name)))
@@ -31,7 +31,7 @@ class PlotDensityPanel(unittest.TestCase):
         npar = 3
         chains = np.random.random_sample(size = (100,npar))
         settings = {'hist_on': True}
-        f = MP.plot_density_panel(chains = chains, settings = settings)
+        f, _ = MP.plot_density_panel(chains = chains, settings = settings)
         for ii in range(npar):
             name = str('$p_{{{}}}$'.format(ii))
             self.assertEqual(f.axes[ii].get_xlabel(), name, msg = str('Should be {}'.format(name)))
@@ -71,7 +71,7 @@ class PlotHistogramPanel(unittest.TestCase):
     def test_basic_plot_features_nsimu_lt_maxpoints(self):
         npar = 3
         chains = np.random.random_sample(size = (100,npar))
-        f = MP.plot_histogram_panel(chains = chains)
+        f, _ = MP.plot_histogram_panel(chains = chains)
         for ii in range(npar):
             self.assertEqual(f.axes[ii].get_xlabel(), str('$p_{{{}}}$'.format(ii)), msg = str('Should be $p_{{{}}}$'.format(ii)))
             self.assertEqual(f.axes[ii].get_ylabel(), '', msg = 'Should be blank')
@@ -81,7 +81,7 @@ class PlotHistogramPanel(unittest.TestCase):
 class PlotPairwiseCorrelationPanel(unittest.TestCase):
     def test_basic_plot_features_nsimu_lt_maxpoints(self):
         chains = np.random.random_sample(size = (100,3))
-        f = MP.plot_pairwise_correlation_panel(chains = chains)
+        f, _ = MP.plot_pairwise_correlation_panel(chains = chains)
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         x2, y2 = f.axes[1].lines[0].get_xydata().T
         x3, y3 = f.axes[1].lines[0].get_xydata().T
@@ -110,7 +110,7 @@ class PlotPairwiseCorrelationPanel(unittest.TestCase):
 class PlotChainMetrics(unittest.TestCase):
     def test_basic_plot_features(self):
         chains = np.random.random_sample(size = (100,1))
-        f = MP.plot_chain_metrics(chain = chains, name = 'a1')
+        f, _ = MP.plot_chain_metrics(chain = chains, name = ['a1'])
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         self.assertTrue(np.array_equal(y1, chains[:,0]), msg = 'Expect y1 to match column 1')
         self.assertEqual(f.axes[0].get_xlabel(), 'Iterations', msg = 'Should be Iterations')
@@ -123,7 +123,7 @@ class PlotChainMetrics(unittest.TestCase):
         
     def test_figsize_plot_features(self):
         chains = np.random.random_sample(size = (100,1))
-        f = MP.plot_chain_metrics(chain = chains, name = 'a1', figsizeinches = (10,2))
+        f, _ = MP.plot_chain_metrics(chain = chains, name = ['a1'], settings = {'fig': dict(figsize = (10,2))})
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         self.assertTrue(np.array_equal(y1, chains[:,0]), msg = 'Expect y1 to match column 1')
         self.assertEqual(f.axes[0].get_xlabel(), 'Iterations', msg = 'Should be Iterations')
