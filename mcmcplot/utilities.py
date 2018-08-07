@@ -6,43 +6,44 @@ Created on Mon May 14 06:24:12 2018
 @author: prmiles
 """
 import numpy as np
-from scipy.interpolate import interp1d
 from scipy import pi,sin,cos
 import sys
 import math
 
 def check_settings(default_settings, user_settings = None):
-        
-        settings = default_settings.copy()
-        
-        options = list(default_settings.keys())
-        if user_settings is None:
-            user_settings = {}
-        user_options = list(user_settings.keys())
-        for ii in range(len(user_options)):
-            if user_options[ii] in options:
-                # check if checking a dictionary
-                if isinstance(settings[user_options[ii]], dict):
-                    settings[user_options[ii]] = check_settings(settings[user_options[ii]], user_settings[user_options[ii]])
-                else:
-                    settings[user_options[ii]] = user_settings[user_options[ii]]
-            if user_options[ii] not in options:
-                settings[user_options[ii]] = user_settings[user_options[ii]]
-                
-        return settings
+    '''
+    Check user settings with default.
     
-def generate_plotly_subplot_coords(nparam, ns1, ns2):
-    sprow = []
-    spcol = []
-    counter = 0
-    for ii in range(ns1):
-        for jj in range(ns2):
-            sprow.append(ii + 1)
-            spcol.append(jj + 1)
-            counter += 1
-            if counter is nparam:
-                break
-    return sprow, spcol
+    Recursively checks elements of user settings against the defaults and updates settings
+    as it goes.  If a user setting does not exist in the default, then the user setting
+    is added to the settings.  If the setting is defined in both the user and default
+    settings, then the user setting overrides the default.  Otherwise, the default
+    settings persist.
+    
+    Args:
+        * **default_settings** (:py:class:`dict`): Default settings for particular method.
+        * **user_settings** (:py:class:`dict`): User defined settings.
+    
+    Returns:
+        * (:py:class:`dict`): Updated settings.
+    '''
+    settings = default_settings.copy() # initially define settings as default
+    
+    options = list(default_settings.keys()) # get default settings
+    if user_settings is None: # convert to empty dict
+        user_settings = {}
+    user_options = list(user_settings.keys()) # get user settings
+    for uo in user_options: # iterate through settings
+        if uo in options:
+            # check if checking a dictionary
+            if isinstance(settings[uo], dict):
+                settings[uo] = check_settings(settings[uo], user_settings[uo])
+            else:
+                settings[uo] = user_settings[uo]
+        if uo not in options:
+            settings[uo] = user_settings[uo]
+            
+    return settings
 
 def generate_subplot_grid(nparam = 2):
     '''
@@ -84,30 +85,6 @@ def generate_names(nparam, names):
     if len(names) != nparam:
         names = extend_names_to_match_nparam(names, nparam)
     return names
-
-def setup_plot_features(nparam, names, figsizeinches):
-    '''
-    Setup plot features.
-
-    Args:
-        * **nparam** (:py:class:`int`): Number of parameters
-        * **names** (:py:class:`list`): Names of parameters provided by user
-        * **figsizeinches** (:py:class:`list`): [Width, Height]
-
-    Returns:
-        * **ns1** (:py:class:`int`): Number of rows in subplot
-        * **ns2** (:py:class:`int`): Number of columns in subplot
-        * **names** (:py:class:`list`): List of strings - parameter names
-        * **figsizeiches** (:py:class:`list`): [Width, Height]
-    '''
-    ns1, ns2 = generate_subplot_grid(nparam = nparam)
-
-    names = generate_names(nparam = nparam, names = names)
-    
-    if figsizeinches is None:
-        figsizeinches = [5,4]
-        
-    return ns1, ns2, names, figsizeinches
 
 def generate_default_names(nparam):
     '''
@@ -349,85 +326,3 @@ def append_to_nrow_ncol_based_on_shape(sh, nrow, ncol):
         nrow.append(sh[0])
         ncol.append(sh[1])
     return nrow, ncol
-
-# --------------------------------------------
-def convert_flag_to_boolean(flag):
-    '''
-    Convert flag to boolean for backwards compatibility.
-
-    Args:
-        * **flag** (:py:class:`bool` or :py:class:`int`): Flag to specify something.
-
-    Returns:
-        * **flag** (:py:class:`bool`): Flag to converted to boolean.
-    '''
-    if flag is 'on':
-        flag = True
-    elif flag is 'off':
-        flag = False
-        
-    return flag
-
-# --------------------------------------------
-def set_local_parameters(ii, local):
-    '''
-    Set local parameters based on tests.
-    
-    :Test 1:
-        * `local == 0`
-    :Test 2:
-        * `local == ii`
-    
-    Args:
-        * **ii** (:py:class:`int`): Index.
-        * **local** (:class:`~numpy.ndarray`): Local flags.
-
-    Returns:
-        * **test** (:class:`~numpy.ndarray`): Array of Booleans indicated test results.
-    '''
-    # some parameters may only apply to certain batch sets
-    test1 = local == 0
-    test2 = local == ii
-    test = test1 + test2
-    return test.reshape(test.size,)
-
-# --------------------------------------------
-def empirical_quantiles(x, p = np.array([0.25, 0.5, 0.75])):
-    '''
-    Calculate empirical quantiles.
-
-    Args:
-        * **x** (:class:`~numpy.ndarray`): Observations from which to generate quantile.
-        * **p** (:class:`~numpy.ndarray`): Quantile limits.
-
-    Returns:
-        * (:class:`~numpy.ndarray`): Interpolated quantiles.
-    '''
-
-    # extract number of rows/cols from np.array
-    n = x.shape[0]
-    # define vector valued interpolation function
-    xpoints = range(n)
-    interpfun = interp1d(xpoints, np.sort(x, 0), axis = 0)
-    
-    # evaluation points
-    itpoints = (n-1)*p
-    
-    return interpfun(itpoints)
-
-# --------------------------------------------    
-def check_defaults(kwargs, defaults):
-    '''
-    Check if defaults are defined in kwargs
-    
-    Args:
-        * **kwargs** (:py:class:`dict`): Keyword arguments.
-        * **defaults** (:py:class:`dict`): Default settings.
-
-    Returns:
-        * **kwargs** (:py:class:`dict`): Updated keyword arguments with at least defaults set.
-    '''
-    for ii in defaults:
-        if ii not in kwargs:
-            kwargs[ii] = defaults[ii]
-    return kwargs

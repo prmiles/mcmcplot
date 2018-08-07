@@ -13,6 +13,32 @@ import numpy as np
 import math
 
 # --------------------------
+class CheckSettings(unittest.TestCase):
+    def test_settings_with_subdict(self):
+        user_settings = dict(a = True, fontsize = 12)
+        default_settings = dict(a = False, linewidth = 3, marker = dict(markersize = 5, color = 'g'))
+        settings = utilities.check_settings(default_settings = default_settings, user_settings = user_settings)
+        self.assertEqual(settings['a'], user_settings['a'], msg = 'Expect user setting to overwrite')
+        self.assertEqual(settings['marker'], default_settings['marker'], msg = 'Expect default to persist')
+        
+    def test_settings_with_subdict_user_ow(self):
+        user_settings = dict(a = True, fontsize = 12, marker = dict(color = 'b'))
+        default_settings = dict(a = False, linewidth = 3, marker = dict(markersize = 5, color = 'g'))
+        settings = utilities.check_settings(default_settings = default_settings, user_settings = user_settings)
+        self.assertEqual(settings['a'], user_settings['a'], msg = 'Expect user setting to overwrite')
+        self.assertEqual(settings['marker']['color'], user_settings['marker']['color'], msg = 'Expect user to overwrite')
+        self.assertEqual(settings['marker']['markersize'], default_settings['marker']['markersize'], msg = 'Expect default to persist')
+        
+    def test_settings_with_subdict_user_has_new_setting(self):
+        user_settings = dict(a = True, fontsize = 12, marker = dict(color = 'b'), linestyle = '--')
+        default_settings = dict(a = False, linewidth = 3, marker = dict(markersize = 5, color = 'g'))
+        settings = utilities.check_settings(default_settings = default_settings, user_settings = user_settings)
+        self.assertEqual(settings['a'], user_settings['a'], msg = 'Expect user setting to overwrite')
+        self.assertEqual(settings['marker']['color'], user_settings['marker']['color'], msg = 'Expect user to overwrite')
+        self.assertEqual(settings['marker']['markersize'], default_settings['marker']['markersize'], msg = 'Expect default to persist')
+        self.assertEqual(settings['linestyle'], user_settings['linestyle'], msg = 'Expect user setting to be added')
+        
+# --------------------------
 class GenerateSubplotGrid(unittest.TestCase):
     def test_generate_subplot_grid(self):
         nparam = 5
@@ -43,27 +69,6 @@ class GenerateNames(unittest.TestCase):
         self.assertEqual(names[0], 'hi', msg = 'First name is hi')
         for ii in range(1, nparam):
             self.assertEqual(names[ii], str('$p_{{{}}}$'.format(ii)))
- 
-# --------------------------
-class SetupPlotFeatures(unittest.TestCase):
-    def test_default_features(self):
-        nparam = 2
-        ns1, ns2, names, figsizeinches = utilities.setup_plot_features(nparam = nparam, names = None, figsizeinches = None)
-        self.assertEqual(ns1, math.ceil(math.sqrt(nparam)), msg = 'Expect 3')
-        self.assertEqual(ns2, round(math.sqrt(nparam)), msg = 'Expect 2')
-        for ii in range(nparam):
-            self.assertEqual(names[ii], str('$p_{{{}}}$'.format(ii)))
-        self.assertEqual(figsizeinches, [5,4], msg = 'Default figure size is [5,4]')
-        
-    def test_nondefault_features(self):
-        nparam = 2
-        ns1, ns2, names, figsizeinches = utilities.setup_plot_features(nparam = nparam, names = ['hi'], figsizeinches = [7,2])
-        self.assertEqual(ns1, math.ceil(math.sqrt(nparam)), msg = 'Expect 3')
-        self.assertEqual(ns2, round(math.sqrt(nparam)), msg = 'Expect 2')
-        self.assertEqual(names[0], 'hi', msg = 'First name is hi')
-        for ii in range(1, nparam):
-            self.assertEqual(names[ii], str('$p_{{{}}}$'.format(ii)))
-        self.assertEqual(figsizeinches, [7,2], msg = 'Default figure size is [7,2]')
         
 # --------------------------
 class GenerateDefaultNames(unittest.TestCase):
@@ -241,60 +246,3 @@ class AppendToNrowNcolBasedOnShape(unittest.TestCase):
         nrow, ncol = utilities.append_to_nrow_ncol_based_on_shape(sh = sh, nrow = nrow, ncol = ncol)
         self.assertEqual(nrow, [2], msg = 'Expect [2]')
         self.assertEqual(ncol, [1], msg = 'Expect [1]')
-        
-# --------------------------
-class ConvertFlagToBoolean(unittest.TestCase):
-    def test_boolean_conversion(self):
-        self.assertTrue(utilities.convert_flag_to_boolean(flag = 'on'), msg = 'on -> True')
-        self.assertFalse(utilities.convert_flag_to_boolean(flag = 'off'), msg = 'off -> False')
-        
-# --------------------------
-class SetLocalParameters(unittest.TestCase):
-    def test_set_local_parameters(self):
-        slp = utilities.set_local_parameters
-        self.assertTrue(np.array_equal(slp(ii = 0, local = np.array([0, 0])), np.array([True, True])), msg = 'Expect Array [True, True]')
-        self.assertTrue(np.array_equal(slp(ii = 0, local = np.array([0, 1])), np.array([True, False])), msg = 'Expect Array [True, False]')
-        self.assertTrue(np.array_equal(slp(ii = 0, local = np.array([1, 0])), np.array([False, True])), msg = 'Expect Array [False, True]')
-
-        self.assertTrue(np.array_equal(slp(ii = 1, local = np.array([0, 1])), np.array([True, True])), msg = 'Expect Array [True, True]')
-        self.assertTrue(np.array_equal(slp(ii = 1, local = np.array([1, 0])), np.array([True, True])), msg = 'Expect Array [True, True]')
-        
-        self.assertTrue(np.array_equal(slp(ii = 1, local = np.array([2, 2])), np.array([False, False])), msg = 'Expect Array [False, False]')
-        self.assertTrue(np.array_equal(slp(ii = 2, local = np.array([1, 2])), np.array([False, True])), msg = 'Expect Array [False, True]')
-        
-# --------------------------------------------
-class Empirical_Quantiles_Test(unittest.TestCase):
-
-    def test_does_default_empirical_quantiles_return_3_element_array(self):
-        test_out = utilities.empirical_quantiles(np.random.rand(10,1))
-        self.assertEqual(test_out.shape, (3,1), msg = 'Default output shape is (3,1)')
-        
-    def test_does_non_default_empirical_quantiles_return_2_element_array(self):
-        test_out = utilities.empirical_quantiles(np.random.rand(10,1), p = np.array([0.2, 0.5]))
-        self.assertEqual(test_out.shape, (2,1), msg = 'Non-default output shape should be (2,1)')
-        
-    def test_empirical_quantiles_should_not_support_list_input(self):
-        with self.assertRaises(AttributeError):
-            utilities.empirical_quantiles([-1,0,1])
-            
-    def test_empirical_quantiles_vector(self):
-        out = utilities.empirical_quantiles(np.linspace(10,20, num = 10).reshape(10,1), p = np.array([0.22, 0.57345]))
-        exact = np.array([[12.2], [15.7345]])
-        comp = np.linalg.norm(out - exact)
-        self.assertAlmostEqual(comp, 0)
-        
-# --------------------------------------------
-class CheckDefaults(unittest.TestCase):
-    def test_check_defaults(self):
-        defaults = {'model_display': '-r'}
-        kwargs = {'model_display': '--k', 'hi': 3}
-        kwargsout = utilities.check_defaults(kwargs, defaults)
-        self.assertEqual(kwargsout['model_display'], '--k', msg = 'Expect --k')
-        self.assertEqual(kwargsout['hi'], 3, msg = 'Expect 3')
-        
-    def test_check_defaults_used_defaults(self):
-        defaults = {'model_display': '-r'}
-        kwargs = {'hi': 3}
-        kwargsout = utilities.check_defaults(kwargs, defaults)
-        self.assertEqual(kwargsout['model_display'], '-r', msg = 'Expect --k')
-        self.assertEqual(kwargsout['hi'], 3, msg = 'Expect 3')
