@@ -3,7 +3,7 @@ mcmcplot
 
 |docs| |build| |coverage| |license| |codacy|
 
-Plotting routines for analyzing chains from a Markov chain Monte Carlo (MCMC) simulation.
+The mcmcplot package is designed to assist in the analysis of sampling chains gathered during a Markov Chain Monte Carlo (MCMC) simulation.  This package was designed with the MCMC code `pymcmcstat <https://prmiles.wordpress.ncsu.edu/codes/python-packages/pymcmcstat/>`_ in mind; however, the plotting routines are amenable to other data sets.  The plotting routines use `matplotlib <https://matplotlib.org/>`_ and `seaborn <https://seaborn.pydata.org/>`_.  User's are recommended to investigate other plotting routines available in `seaborn <https://seaborn.pydata.org/>`_ as it is specifically designed for this sort of analysis.  The routines available in `mcmcplot` serve as a useful wrapper function for several `seaborn <https://seaborn.pydata.org/>`_ plots, but it is not an exhaustive demonstration.
 
 Installation
 ============
@@ -34,6 +34,12 @@ Contributors
 
 See the `GitHub contributor
 page <https://github.com/prmiles/mcmcplot/graphs/contributors>`_
+
+Feedback
+========
+
+- `Feature Request <https://github.com/prmiles/mcmcplot/issues/new?template=feature_request.md>`_
+- `Bug Report <https://github.com/prmiles/mcmcplot/issues/new?template=bug_report.md>`_
 
 .. |docs| image:: https://readthedocs.org/projects/mcmcplot/badge/?version=latest
     :target: https://mcmcplot.readthedocs.io/en/latest/?badge=latest
