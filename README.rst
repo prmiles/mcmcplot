@@ -1,22 +1,24 @@
 mcmcplot
 ========
 
-|docs| |build| |coverage| |license| |codacy|
+|docs| |build| |coverage| |license| |codacy| |zenodo|
 
-The mcmcplot package is designed to assist in the analysis of sampling chains gathered during a Markov Chain Monte Carlo (MCMC) simulation.  This package was designed with the MCMC code `pymcmcstat <https://prmiles.wordpress.ncsu.edu/codes/python-packages/pymcmcstat/>`_ in mind; however, the plotting routines are amenable to other data sets.  The plotting routines use `matplotlib <https://matplotlib.org/>`_ and `seaborn <https://seaborn.pydata.org/>`_.  User's are recommended to investigate other plotting routines available in `seaborn <https://seaborn.pydata.org/>`_ as it is specifically designed for this sort of analysis.  The routines available in `mcmcplot` serve as a useful wrapper function for several `seaborn <https://seaborn.pydata.org/>`_ plots, but it is not an exhaustive demonstration.
+The `mcmcplot <https://prmiles.wordpress.ncsu.edu/codes/python-packages/mcmcplot/>`_ package is designed to assist in the analysis of sampling chains gathered during a Markov Chain Monte Carlo (MCMC) simulation.  This package was designed with the MCMC code `pymcmcstat <https://prmiles.wordpress.ncsu.edu/codes/python-packages/pymcmcstat/>`_ in mind; however, the plotting routines are amenable to other data sets.  The plotting routines use `matplotlib <https://matplotlib.org/>`_ and `seaborn <https://seaborn.pydata.org/>`_.  User's are recommended to investigate other plotting routines available in `seaborn <https://seaborn.pydata.org/>`_ as it is specifically designed for this sort of analysis.  The routines available in `mcmcplot` serve as a useful wrapper function for several `seaborn <https://seaborn.pydata.org/>`_ plots, but it is not an exhaustive demonstration.
 
 Installation
 ============
 
-This code can be found on the `Github project page <https://github.com/prmiles/mcmcplot>`_.  It is open sources and provided under the MIT license.
-To install directly from Github,
+This code can be found on the `Github project page <https://github.com/prmiles/mcmcplot>`_.  The package is available on the PyPI distribution site and the latest version can be installed via
+::
+
+    pip install mcmcplot
+    
+The master branch typically matches the latest version on the PyPI distribution site.  To install the master branch directly from Github,
 ::
 
     pip install git+https://github.com/prmiles/mcmcplot.git
 
 You can also clone the repository and run ``python setup.py install``.
-
-Package is currently in the process of being added to the PyPI distribution site.
 
 Getting Started
 ===============
@@ -34,6 +36,11 @@ Contributors
 
 See the `GitHub contributor
 page <https://github.com/prmiles/mcmcplot/graphs/contributors>`_
+
+Citing mcmcplot
+===============
+
+Please see the `mcmcplot homepage <https://prmiles.wordpress.ncsu.edu/codes/python-packages/mcmcplot/>`_ or follow the DOI badge above to find the appropriate citation information.
 
 Feedback
 ========
@@ -55,3 +62,6 @@ Feedback
     
 .. |coverage| image:: https://coveralls.io/repos/github/prmiles/mcmcplot/badge.svg?branch=master
     :target: https://coveralls.io/github/prmiles/mcmcplot?branch=master
+    
+.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1341091.svg
+    :target: https://doi.org/10.5281/zenodo.1341091
