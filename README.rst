@@ -63,5 +63,5 @@ Feedback
 .. |coverage| image:: https://coveralls.io/repos/github/prmiles/mcmcplot/badge.svg?branch=master
     :target: https://coveralls.io/github/prmiles/mcmcplot?branch=master
     
-.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1341091.svg
-    :target: https://doi.org/10.5281/zenodo.1341091
+.. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1341090.svg
+    :target: https://doi.org/10.5281/zenodo.1341090
