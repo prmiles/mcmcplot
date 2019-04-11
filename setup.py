@@ -30,7 +30,7 @@ setup(
     package_dir={'mcmcplot': 'mcmcplot'},
     packages=find_packages(),
     zip_safe=False,
-    install_requires=['numpy>=1.14', 'scipy>=1.0', 'matplotlib>=2.2.0', 'h5py>=2.7.0', 'statsmodels>=0.9.0', 'seaborn>=0.9.0'],
+    install_requires=['numpy>=1.14', 'scipy>=1.0', 'matplotlib>=2.2.0,<3.0.0', 'h5py>=2.7.0', 'statsmodels>=0.9.0', 'seaborn>=0.9.0'],
     extras_require = {'docs':['sphinx'], 'plotting':['matplotlib', 'seaborn'],},
     classifiers=['License :: OSI Approved :: MIT License',
                    'Natural Language :: English',
