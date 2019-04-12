@@ -9,14 +9,6 @@ mcmcplot.mcmatplot module
     :undoc-members:
     :show-inheritance:
 
-mcmcplot.mcplotly module
-------------------------
-
-.. automodule:: mcmcplot.mcplotly
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 mcmcplot.mcseaborn module
 -------------------------
 
