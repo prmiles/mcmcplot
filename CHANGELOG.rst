@@ -4,6 +4,7 @@ Changelog
 v0.0.1 ()
 --------------------------
 - Added constraint: *matplotlib* <3.0.0
+- Fixed bug in name generation utility
 
 v0.0.0 (August 9, 2018)
 --------------------------
