@@ -65,3 +65,6 @@ Feedback
     
 .. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1341090.svg
     :target: https://doi.org/10.5281/zenodo.1341090
+
+.. |cnec| image:: https://raw.githubusercontent.com/prmiles/mcmcplot/master/doc/cnec-logo.png
+    :target: https://cnec.ncsu.edu/
