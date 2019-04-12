@@ -22,6 +22,7 @@ setup(
     version=__version__,
     description='A library to plot and analyze chains from mcmc simulations',
     long_description=long_description,
+    long_description_content_type='text/x-rst'
     url='https://github.com/prmiles/mcmcplot',
     download_url='https://github.com/prmiles/mcmcplot',
     author='Paul Miles',
