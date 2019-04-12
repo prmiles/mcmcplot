@@ -23,7 +23,7 @@ def check_settings(default_settings, user_settings=None):
     settings persist.
 
     Args:
-        * **default_settings** (:py:class:`dict`): Default settings for
+        * **default_settings** (:py:class:`dict`): Default settings for \
         particular method.
         * **user_settings** (:py:class:`dict`): User defined settings.
 
@@ -126,7 +126,7 @@ def extend_names_to_match_nparam(names, nparam):
         * **nparam** (:py:class:`int`): Number of parameter names to generate
 
     Returns:
-        * **names** (:py:class:`list`): List of strings - extended
+        * **names** (:py:class:`list`): List of strings - extended \
         list of parameter names
     '''
     if names is None:
@@ -153,7 +153,7 @@ def make_x_grid(x, npts=100):
         * **npts** (:py:class:`int`): Number of points to use in generated grid
 
     Returns:
-        * Uniformly spaced array of points with shape :code:`=(npts,1)`.
+        * Uniformly spaced array of points with shape :code:`=(npts,1)`. \
         (:class:`~numpy.ndarray`)
     '''
     xmin = min(x)
@@ -177,7 +177,7 @@ def iqrange(x):
         * **x** (:class:`~numpy.ndarray`): Array of points.
 
     Returns:
-        * (:class:`~numpy.ndarray`): Interquantile range - single
+        * (:class:`~numpy.ndarray`): Interquantile range - single \
         element array, `q3 - q1`.
     '''
     nr, nc = x.shape
@@ -220,7 +220,7 @@ def scale_bandwidth(x):
         * **x** (:class:`~numpy.ndarray`): Array of points - column of chain.
 
     Returns:
-        * **s** (:class:`~numpy.ndarray`): Scaled bandwidth - single
+        * **s** (:class:`~numpy.ndarray`): Scaled bandwidth - single \
         element array.
     '''
     n = len(x)
@@ -304,8 +304,8 @@ def is_semi_pos_def_chol(x):
 
     Returns:
         * If matrix is `not` semi positive definite return :code:`False, None`
-        * If matrix is semi positive definite return :code:`True` and the Upper
-        triangular form of the Cholesky decomposition matrix.
+        * If matrix is semi positive definite return :code:`True` and the \
+        Upper triangular form of the Cholesky decomposition matrix.
     '''
     c = None
     try:

@@ -19,17 +19,17 @@ def plot_joint_distributions(chains, names=None, sns_style='white',
     https://seaborn.pydata.org/generated/seaborn.jointplot.html
 
     Args:
-        * **chains** (:class:`~numpy.ndarray`): Sampling chain
+        * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
-        * **names** (:py:class:`list`): List of strings - name
+        * **names** (:py:class:`list`): List of strings - name \
         of each parameter
-        * **sns_style** (:py:class:`str`): Style for seaborn plot.
+        * **sns_style** (:py:class:`str`): Style for seaborn plot. \
         Default is `white`.
-        * **settings** (:py:class:`dict`): Settings for features
+        * **settings** (:py:class:`dict`): Settings for features \
         of this method.
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually
+        * (:py:class:`tuple`): (figure handle, settings actually \
         used in program)
     """
     default_settings = {
@@ -63,17 +63,17 @@ def plot_paired_density_matrix(chains, names=None, sns_style='white',
     https://seaborn.pydata.org/generated/seaborn.PairGrid.html
 
     Args:
-        * **chains** (:class:`~numpy.ndarray`): Sampling chain
+        * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
-        * **names** (:py:class:`list`): List of strings - name
+        * **names** (:py:class:`list`): List of strings - name \
         of each parameter
-        * **sns_style** (:py:class:`str`): Style for seaborn plot.
+        * **sns_style** (:py:class:`str`): Style for seaborn plot. \
         Default is `white`.
-        * **settings** (:py:class:`dict`): Settings for features
+        * **settings** (:py:class:`dict`): Settings for features \
         of this method.
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually
+        * (:py:class:`tuple`): (figure handle, settings actually \
         used in program)
     """
     default_settings = {
