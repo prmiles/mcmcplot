@@ -96,7 +96,7 @@ def generate_default_names(nparam):
 
     For example, if `nparam` = 4, then the generated names are::
 
-        names = ['p_{0}', 'p_{1}', 'p_{2}', 'p_{3}']
+        names = ['$p_{0}$', '$p_{1}$', '$p_{2}$', '$p_{3}$']
 
     Args:
         * **nparam** (:py:class:`int`): Number of parameter names to generate
@@ -119,7 +119,7 @@ def extend_names_to_match_nparam(names, nparam):
     two additional names will be appended to the `names` list.
     E.g.,::
 
-        names = ['name_1', 'name_2', 'p_{2}', 'p_{3}']
+        names = ['name_1', 'name_2', '$p_{2}$', '$p_{3}$']
 
     Args:
         * **names** (:py:class:`list`): Names of parameters provided by user
