@@ -32,15 +32,15 @@ def plot_density_panel(chains, names=None, settings=None):
     Plot marginal posterior densities
 
     Args:
-        * **chains** (:class:`~numpy.ndarray`): Sampling chain
+        * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
-        * **names** (:py:class:`list`): List of strings - name
+        * **names** (:py:class:`list`): List of strings - name \
         of each parameter
-        * **settings** (:py:class:`dict`): Settings for features
+        * **settings** (:py:class:`dict`): Settings for features \
         of this method.
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually
+        * (:py:class:`tuple`): (figure handle, settings actually \
         used in program)
     '''
     default_settings = {
@@ -85,15 +85,15 @@ def plot_histogram_panel(chains, names=None, settings=None):
     Plot histogram from each parameter's sampling history
 
     Args:
-        * **chains** (:class:`~numpy.ndarray`): Sampling chain
+        * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
-        * **names** (:py:class:`list`): List of strings - name
+        * **names** (:py:class:`list`): List of strings - name \
         of each parameter
-        * **settings** (:py:class:`dict`): Settings for features
+        * **settings** (:py:class:`dict`): Settings for features \
         of this method.
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually
+        * (:py:class:`tuple`): (figure handle, settings actually \
         used in program)
     """
     default_settings = {
@@ -132,15 +132,15 @@ def plot_chain_panel(chains, names=None, settings=None):
     Plot sampling chain for each parameter
 
     Args:
-        * **chains** (:class:`~numpy.ndarray`): Sampling chain
+        * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
-        * **names** (:py:class:`list`): List of strings - name
+        * **names** (:py:class:`list`): List of strings - name \
         of each parameter
-        * **settings** (:py:class:`dict`): Settings for features
+        * **settings** (:py:class:`dict`): Settings for features \
         of this method.
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually
+        * (:py:class:`tuple`): (figure handle, settings actually \
         used in program)
     """
     default_settings = {
@@ -194,15 +194,15 @@ def plot_pairwise_correlation_panel(chains, names=None, settings=None):
     Plot pairwise correlation for each parameter
 
     Args:
-        * **chains** (:class:`~numpy.ndarray`): Sampling chain
+        * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
-        * **names** (:py:class:`list`): List of strings - name
+        * **names** (:py:class:`list`): List of strings - name \
         of each parameter
-        * **settings** (:py:class:`dict`): Settings for features
+        * **settings** (:py:class:`dict`): Settings for features \
         of this method.
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually
+        * (:py:class:`tuple`): (figure handle, settings actually \
         used in program)
     """
     default_settings = {
@@ -275,14 +275,14 @@ def plot_chain_metrics(chain, name=None, settings=None):
     - Histogram of chain
 
     Args:
-        * **chains** (:class:`~numpy.ndarray`): Sampling chain
+        * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for specific parameter
         * **names** (:py:class:`str`): Name of each parameter
-        * **settings** (:py:class:`dict`): Settings for features
+        * **settings** (:py:class:`dict`): Settings for features \
         of this method.
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually
+        * (:py:class:`tuple`): (figure handle, settings actually \
         used in program)
     '''
     default_settings = {

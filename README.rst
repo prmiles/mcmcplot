@@ -51,6 +51,12 @@ Feedback
 - `Feature Request <https://github.com/prmiles/mcmcplot/issues/new?template=feature_request.md>`_
 - `Bug Report <https://github.com/prmiles/mcmcplot/issues/new?template=bug_report.md>`_
 
+Sponsor
+=======
+This work was sponsored in part by the NNSA Office of Defense Nuclear Nonproliferation R&D through the Consortium for Nonproliferation Enabling Capabilities.
+
+|cnec|
+
 .. |docs| image:: https://readthedocs.org/projects/mcmcplot/badge/?version=latest
     :target: https://mcmcplot.readthedocs.io/en/latest/?badge=latest
     
@@ -65,3 +71,6 @@ Feedback
     
 .. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1341090.svg
     :target: https://doi.org/10.5281/zenodo.1341090
+
+.. |cnec| image:: https://raw.githubusercontent.com/prmiles/mcmcplot/master/doc/cnec-logo.png
+    :target: https://cnec.ncsu.edu/
