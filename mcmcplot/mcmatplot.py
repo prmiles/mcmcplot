@@ -102,7 +102,7 @@ def plot_histogram_panel(chains, names=None, settings=None):
             'kde': dict(bw='normal_reference', var_type='c'),
             'hist': dict(density=True),
             'xlabel': {},
-            'ylabel': dict(s=''),
+            'ylabel': dict(ylabel=''),
             'turn_yticks_on': False,
             }
     settings = check_settings(
@@ -147,7 +147,7 @@ def plot_chain_panel(chains, names=None, settings=None):
             'maxpoints': 500,
             'fig': dict(figsize=(5, 4), dpi=100),
             'plot': dict(color='b', marker='.', linestyle='none'),
-            'xlabel': {'s': 'Iteration'},
+            'xlabel': {'xlabel': 'Iteration'},
             'ylabel': {},
             'add_pm2std': False,
             'mean': dict(color='k', marker=None, linestyle='-', linewidth=3),
