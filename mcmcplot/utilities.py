@@ -155,7 +155,6 @@ def make_x_grid(x, npts=100):
     Returns:
         * (:class:`~numpy.ndarray`): Uniformly spaced array of points \
         with shape :code:`(npts,1)`.
-        
     '''
     xmin = min(x)
     xmax = max(x)
