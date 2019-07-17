@@ -65,7 +65,7 @@ def plot_joint_distributions(chains, names=None,
         return g
 
 
-def plot_paired_density_matrix(chains, names=None, sns_style='white',
+def plot_paired_density_matrix(chains, names=None,
                                index=None, settings=None,
                                return_settings=False):
     """
