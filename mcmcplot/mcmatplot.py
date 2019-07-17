@@ -180,7 +180,7 @@ def plot_chain_panel(chains, names=None, settings=None,
         * **maxpoints** (:py:class:`int`): Max number of display points
           - keeps scatter plot from becoming overcrowded
         * **return_settings** (:py:class:`bool`): Flag to return \
-        figure settings. Default: `False`  
+        figure settings. Default: `False`
 
     Returns:
         * If `return_settings=True`, (:py:class:`tuple`): \
