@@ -28,7 +28,8 @@ except ImportError as e:
 
 # --------------------------------------------
 def plot_density_panel(chains, names=None, settings=None,
-                       return_kde=False, return_settings=False):
+                       return_kde=False, hist_on=False,
+                       return_settings=False):
     '''
     Plot marginal posterior densities
 
@@ -51,7 +52,6 @@ def plot_density_panel(chains, names=None, settings=None,
             'plot': dict(color='k', marker=None, linestyle='-', linewidth=3),
             'xlabel': {},
             'ylabel': {},
-            'hist_on': False,
             'hist': dict(density=True),
             }
     settings = check_settings(
@@ -69,8 +69,8 @@ def plot_density_panel(chains, names=None, settings=None,
         # Compute kernel density estimate
         kde = KDEMultivariate(chain, **settings['kde'])
         # plot density on subplot
-        plt.subplot(ns1, ns2, ii+1)
-        if settings['hist_on'] is True:  # include histograms
+        plt.subplot(ns1, ns2, ii + 1)
+        if hist_on is True:  # include histograms
             hist(chain, **settings['hist'])
         plt.plot(chain_grid, kde.pdf(chain_grid), **settings['plot'])
         # format figure
@@ -127,7 +127,7 @@ def plot_histogram_panel(chains, names=None,
         # define chain
         chain = chains[:, ii].reshape(nsimu, 1)  # check indexing
         # plot density on subplot
-        ax = plt.subplot(ns1, ns2, ii+1)
+        ax = plt.subplot(ns1, ns2, ii + 1)
         hist(chain, **settings['hist'])
         # format figure
         plt.xlabel(names[ii], **settings['xlabel'])
@@ -211,24 +211,28 @@ def plot_chain_panel(chains, names=None, settings=None,
 
 # --------------------------------------------
 def plot_pairwise_correlation_panel(chains, names=None, settings=None,
+                                    skip=1, maxpoints=500,
                                     return_settings=False):
     """
     Plot pairwise correlation for each parameter
 
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain \
-        for each parameter
+          for each parameter
         * **names** (:py:class:`list`): List of strings - name \
-        of each parameter
-        * **settings** (:py:class:`dict`): Settings for features \
-        of this method.
+          of each parameter
+        * **settings** (:py:class:`dict`): Settings for figure \
+          features made by this method.
+        * **skip** (:py:class:`int`): Indicates step size to be used when
+          plotting elements from the chain
+        * **maxpoints** (py:class:`int`): Maximum allowable number of points
+          in plot.
 
     Returns:
         * (:py:class:`tuple`): (figure handle, settings actually \
         used in program)
     """
     default_settings = {
-            'skip': 1,
             'fig': dict(figsize=(7, 5), dpi=100),
             'plot': dict(color='b', marker='.', linestyle='none'),
             'xlabel': {},
@@ -247,16 +251,16 @@ def plot_pairwise_correlation_panel(chains, names=None, settings=None,
     nsimu, nparam = chains.shape  # number of rows, number of columns
     ns1, ns2 = generate_subplot_grid(nparam)
     names = generate_names(nparam, names)
-    inds = range(0, nsimu, settings['skip'])
+    inds = setup_subsample(skip, maxpoints, nsimu)
     f = plt.figure(**settings['fig'])  # initialize figure
-    for jj in range(2, nparam+1):
+    for jj in range(2, nparam + 1):
         for ii in range(1, jj):
-            chain1 = chains[inds, ii-1]
+            chain1 = chains[inds, ii - 1]
             chain1 = chain1.reshape(nsimu, 1)
-            chain2 = chains[inds, jj-1]
+            chain2 = chains[inds, jj - 1]
             chain2 = chain2.reshape(nsimu, 1)
             # plot density on subplot
-            ax = plt.subplot(nparam-1, nparam-1, (jj-2)*(nparam-1)+ii)
+            ax = plt.subplot(nparam - 1, nparam - 1, (jj - 2)*(nparam - 1)+ii)
             plt.plot(chain1, chain2, **settings['plot'])
             # format figure
             if jj != nparam:  # rm xticks
@@ -264,13 +268,13 @@ def plot_pairwise_correlation_panel(chains, names=None, settings=None,
             if ii != 1:  # rm yticks
                 ax.set_yticklabels([])
             if ii == 1:  # add ylabels
-                plt.ylabel(str('{}'.format(names[jj-1])), **settings['ylabel'])
+                plt.ylabel(str('{}'.format(names[jj - 1])), **settings['ylabel'])
             if ii == jj - 1:
                 if nparam == 2:  # add xlabels
-                    plt.xlabel(str('{}'.format(names[ii-1])),
+                    plt.xlabel(str('{}'.format(names[ii - 1])),
                                **settings['xlabel'])
                 else:  # add title
-                    plt.title(str('{}'.format(names[ii-1])),
+                    plt.title(str('{}'.format(names[ii - 1])),
                               **settings['title'])
             if settings['add_5095_contours'] is True:
                 contours = generate_ellipse_plot_points(
