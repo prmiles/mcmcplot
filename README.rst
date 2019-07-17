@@ -1,7 +1,7 @@
 mcmcplot
 ========
 
-|docs| |build| |coverage| |license| |zenodo|
+|docs| |build| |coverage| |license| |zenodo| |pypi| |pyversion|
 
 The `mcmcplot <https://github.com/prmiles/mcmcplot/wiki>`_ package is designed to assist in the analysis of sampling chains gathered during a Markov Chain Monte Carlo (MCMC) simulation.  This package was designed with the MCMC code `pymcmcstat <https://github.com/prmiles/pymcmcstat/wiki>`_ in mind; however, the plotting routines are amenable to other data sets.  The plotting routines use `matplotlib <https://matplotlib.org/>`_ and `seaborn <https://seaborn.pydata.org/>`_.  User's are recommended to investigate other plotting routines available in `seaborn <https://seaborn.pydata.org/>`_ as it is specifically designed for this sort of analysis.  The routines available in `mcmcplot <https://github.com/prmiles/mcmcplot/wiki>`_ serve as a useful wrapper function for several `seaborn <https://seaborn.pydata.org/>`_ plots, but it is not an exhaustive demonstration.
 
@@ -71,6 +71,12 @@ This work was sponsored in part by the NNSA Office of Defense Nuclear Nonprolife
     
 .. |zenodo| image:: https://zenodo.org/badge/DOI/10.5281/zenodo.1341090.svg
     :target: https://doi.org/10.5281/zenodo.1341090
+
+.. |pypi| image:: https://img.shields.io/pypi/v/mcmcplot.svg
+    :target: https://pypi.org/project/mcmcplot/
+    
+.. |pyversion| image:: https://img.shields.io/pypi/pyversions/mcmcplot.svg
+    :target: https://pypi.org/project/mcmcplot/
 
 .. |cnec| image:: https://raw.githubusercontent.com/prmiles/mcmcplot/master/doc/cnec-logo.png
     :target: https://cnec.ncsu.edu/
