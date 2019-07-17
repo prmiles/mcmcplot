@@ -25,9 +25,7 @@ Getting Started
 
 - `Tutorial notebooks <https://github.com/prmiles/mcmcplot_examples>`_
 - `Documentation <http://mcmcplot.readthedocs.io/>`_
-- `Release history`_
-
-.. _Release history: CHANGELOG.rst
+- `Release history <https://github.com/prmiles/mcmcplot/blob/master/CHANGELOG.rst>`_
 
 License
 =======
