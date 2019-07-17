@@ -256,9 +256,9 @@ def plot_pairwise_correlation_panel(chains, names=None, settings=None,
     for jj in range(2, nparam + 1):
         for ii in range(1, jj):
             chain1 = chains[inds, ii - 1]
-            chain1 = chain1.reshape(nsimu, 1)
+            # chain1 = chain1.reshape(nsimu, 1)
             chain2 = chains[inds, jj - 1]
-            chain2 = chain2.reshape(nsimu, 1)
+            # chain2 = chain2.reshape(nsimu, 1)
             # plot density on subplot
             ax = plt.subplot(nparam - 1, nparam - 1, (jj - 2)*(nparam - 1)+ii)
             plt.plot(chain1, chain2, **settings['plot'])
