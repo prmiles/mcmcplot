@@ -57,6 +57,8 @@ def plot_joint_distributions(chains, names=None,
             # Show the joint distribution using kernel density estimation
             a = sns.jointplot(x=chain1, y=chain2, **settings)
             g.append(a)
+    if len(g) == 1:
+        g = g[0]  # return handle instead of list
     if return_settings is True:
         return g, settings
     else:

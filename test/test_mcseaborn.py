@@ -35,6 +35,21 @@ class PlotJointDistributions(unittest.TestCase):
                 count += 1
         plt.close()
 
+    def test_basic_joint_distributions_single_fig(self):
+        npar = 2
+        chains = np.random.random_sample(size=(100, npar))
+        f = MP.plot_joint_distributions(chains=chains)
+        names = utilities.generate_names(nparam=npar, names=None)
+        for jj in range(2, npar+1):
+            for ii in range(1, jj):
+                name1 = names[ii-1]
+                name2 = names[jj-1]
+                self.assertEqual(f.ax_joint.get_xlabel(), name1,
+                                 msg=str('Should be {}'.format(name1)))
+                self.assertEqual(f.ax_joint.get_ylabel(), name2,
+                                 msg=str('Should be {}'.format(name2)))
+        plt.close()
+
     def test_basic_joint_distributions_with_settings(self):
         npar = 3
         chains = np.random.random_sample(size=(100, npar))
