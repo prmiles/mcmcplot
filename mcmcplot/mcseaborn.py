@@ -9,10 +9,11 @@ Created on August 5, 2018
 import pandas as pd
 import seaborn as sns
 from .utilities import generate_names, check_settings
+from .utilities import setup_subsample
 
 
 def plot_joint_distributions(chains, names=None, sns_style='white',
-                             settings=None):
+                             settings=None, maxpoints=500, skip=1):
     """
     Plot joint distribution for each parameter set.
 
@@ -27,6 +28,10 @@ def plot_joint_distributions(chains, names=None, sns_style='white',
         Default is `white`.
         * **settings** (:py:class:`dict`): Settings for features \
         of this method.
+        * **skip** (:py:class:`int`): Indicates step size to be used when
+          plotting elements from the chain
+        * **maxpoints** (:py:class:`int`): Max number of display points
+          - keeps scatter plot from becoming overcrowded
 
     Returns:
         * (:py:class:`tuple`): (figure handle, settings actually \
@@ -43,12 +48,15 @@ def plot_joint_distributions(chains, names=None, sns_style='white',
     sns.set_style(settings['sns_style'], settings['sns'])
     nsimu, nparam = chains.shape  # number of rows, number of columns
     names = generate_names(nparam=nparam, names=names)
-    inds = range(0, nsimu, settings['skip'])
+    # setup sample indices
+    inds = setup_subsample(skip, maxpoints, nsimu)
     g = []
-    for jj in range(2, nparam+1):
+    for jj in range(2, nparam + 1):
         for ii in range(1, jj):
-            chain1 = pd.Series(chains[inds, ii-1], name=names[ii-1])
-            chain2 = pd.Series(chains[inds, jj-1], name=names[jj-1])
+            chain1 = pd.Series(chains[inds, ii - 1],
+                               name=names[ii - 1])
+            chain2 = pd.Series(chains[inds, jj - 1],
+                               name=names[jj - 1])
             # Show the joint distribution using kernel density estimation
             a = sns.jointplot(x=chain1, y=chain2, **settings['jointplot'])
             g.append(a)
