@@ -268,7 +268,8 @@ def plot_pairwise_correlation_panel(chains, names=None, settings=None,
             if ii != 1:  # rm yticks
                 ax.set_yticklabels([])
             if ii == 1:  # add ylabels
-                plt.ylabel(str('{}'.format(names[jj - 1])), **settings['ylabel'])
+                plt.ylabel(str('{}'.format(names[jj - 1])),
+                           **settings['ylabel'])
             if ii == jj - 1:
                 if nparam == 2:  # add xlabels
                     plt.xlabel(str('{}'.format(names[ii - 1])),
