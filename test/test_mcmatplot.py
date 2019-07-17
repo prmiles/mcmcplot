@@ -276,17 +276,3 @@ class PlotChainMetrics(unittest.TestCase):
         self.assertTrue(isinstance(settings, dict),
                         msg='Expect dict return')
         plt.close()
-
-
-# --------------------------
-class Plot(unittest.TestCase):
-    def test_plot_attributes(self):
-        P = MP.Plot()
-        check_these = ['plot_density_panel',
-                       'plot_chain_panel',
-                       'plot_pairwise_correlation_panel',
-                       'plot_histogram_panel',
-                       'plot_chain_metrics']
-        for ct in check_these:
-            self.assertTrue(hasattr(P, ct),
-                            msg=str('P contains method {}'.format(ct)))
