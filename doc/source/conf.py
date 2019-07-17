@@ -13,6 +13,7 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
+import re
 import sys
 sys.path.insert(0, os.path.abspath('../..'))
 
@@ -24,12 +25,23 @@ copyright = '2018, Paul Miles'
 author = 'Paul Miles'
 
 # The short X.Y version
-with open('../../mcmcplot/__version__.py','r') as f:
-    version = f.read()
-    release = version
-#version = ''
-# The full version, including alpha/beta/rc tags
-print(version)
+def get_version():
+    VERSIONFILE = os.path.join('..','..', 'mcmcplot', '__init__.py')
+    with open(VERSIONFILE, 'rt') as f:
+        lines = f.readlines()
+    vgx = '^__version__ = \"\d+\.\d+\.\d.*\"'
+    for line in lines:
+        mo = re.search(vgx, line, re.M)
+        if mo:
+            return mo.group().split('"')[1]
+    raise RuntimeError('Unable to find version in %s.' % (VERSIONFILE,))
+#with open('../../pymcmcstat/__init__.py','r') as f:
+#    version = f.read()
+release = get_version()
+# The short X.Y version
+tmp = release.split('.')
+version = str('{}.{}'.format(tmp[0], tmp[1]))
+print(release)
 
 # -- General configuration ---------------------------------------------------
 
@@ -157,7 +169,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'mcmcplotly.tex', 'mcmcplotly Documentation',
+    (master_doc, 'mcmcplot.tex', 'mcmcplot Documentation',
      'Paul Miles', 'manual'),
 ]
 

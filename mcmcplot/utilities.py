@@ -25,7 +25,10 @@ def check_settings(default_settings, user_settings=None):
     Args:
         * **default_settings** (:py:class:`dict`): Default settings for \
         particular method.
-        * **user_settings** (:py:class:`dict`): User defined settings.
+
+    Kwargs:
+        * **user_settings** (:py:class:`dict`): User defined settings. \
+          Default: `None`
 
     Returns:
         * (:py:class:`dict`): Updated settings.
@@ -54,8 +57,9 @@ def generate_subplot_grid(nparam=2):
     For example, if `nparam` = 2, then the subplot will have
     2 rows and 1 column.
 
-    Args:
-        * **nparam** (:py:class:`int`): Number of parameters
+    Kwargs:
+        * **nparam** (:py:class:`int`): Number of parameters. \
+          Default: `2`
 
     Returns:
         * **ns1** (:py:class:`int`): Number of rows in subplot
@@ -150,12 +154,14 @@ def make_x_grid(x, npts=100):
 
     Args:
         * **x** (:class:`~numpy.ndarray`): Array of points
-        * **npts** (:py:class:`int`): Number of points to use in generated grid
+
+    Kwargs:
+        * **npts** (:py:class:`int`): Number of points to use in \
+          generated grid. Default: `100`
 
     Returns:
         * (:class:`~numpy.ndarray`): Uniformly spaced array of points \
         with shape :code:`(npts,1)`.
-        
     '''
     xmin = min(x)
     xmax = max(x)
@@ -203,8 +209,12 @@ def gaussian_density_function(x, mu=0, sigma2=1):
 
     Args:
         * **x** (:py:class:`float`): Value of which to calculate probability.
-        * **mu** (:py:class:`float`): Mean of Gaussian distribution.
-        * **sigma2** (:py:class:`float`): Variance of Gaussian distribution.
+
+    Kwargs:
+        * **mu** (:py:class:`float`): Mean of Gaussian distribution. \
+          Default: `0`
+        * **sigma2** (:py:class:`float`): Variance of Gaussian \
+          distribution. Default: `1`
 
     Returns:
         * **y** (:py:class:`float`): Likelihood of `x`.
@@ -240,7 +250,10 @@ def generate_ellipse(mu, cmat, ndp=100):
     Args:
         * **mu** (:class:`~numpy.ndarray`): Mean values
         * **cmat** (:class:`~numpy.ndarray`): Covariance matrix
-        * **npd** (:py:class:`int`): Number of points to generate
+
+    Kwargs:
+        * **npd** (:py:class:`int`): Number of points to generate. \
+          Default: `100`
 
     Returns:
         * **x** (:class:`~numpy.ndarray`): x-points
@@ -269,6 +282,10 @@ def generate_ellipse_plot_points(x, y, ndp=100):
         * **x** (:class:`~numpy.ndarray`): chain 1
         * **y** (:class:`~numpy.ndarray`): chain 2
 
+    Kwargs:
+        * **npd** (:py:class:`int`): Number of points to generate. \
+          Default: `100`
+
     Returns:
         * (:py:class:`dict`): 50% and 95% probability contours.
     '''
@@ -287,7 +304,10 @@ def check_symmetric(a, tol=1e-8):
 
     Args:
         * **a** (:class:`~numpy.ndarray`): Array to test.
-        * **tol** (:py:class:`float`): Tolerance for testing equality.
+
+    Kwargs:
+        * **tol** (:py:class:`float`): Tolerance for testing equality. \
+          Default: `1e-8`
 
     Returns:
         * (:py:class:`bool`): True -> symmetric, False -> not symmetric.
@@ -336,3 +356,29 @@ def append_to_nrow_ncol_based_on_shape(sh, nrow, ncol):
         nrow.append(sh[0])
         ncol.append(sh[1])
     return nrow, ncol
+
+
+def setup_subsample(skip, maxpoints, nsimu):
+    '''
+    Setup subsampling from posterior.
+
+    When plotting the sampling chain, it is often beneficial to subsample
+    in order to avoid to dense of plots.  This routine determines the
+    appropriate step size based on the size of the chain (nsimu) and maximum
+    points allowed to plot (maxpoints).  The function checks if the
+    size of the chain exceeds the maximum number of points allowed in the
+    plot.  If yes, skip is defined such that every the max number of points
+    are used and sampled evenly from the start to end of the chain.  Otherwise
+    the value of skip is return as defined by the user.  A subsample index
+    is then generated based on the value of skip and the number of simulations.
+
+    Args:
+        * **skip** (:py:class:`int`): User defined skip value.
+        * **maxpoints** (:py:class:`int`): Maximum points allowed in each plot.
+
+    Returns:
+        * (:py:class:`int`): Skip value.
+    '''
+    if nsimu > maxpoints:
+        skip = int(np.floor(nsimu/maxpoints))
+    return np.arange(0, nsimu, skip)

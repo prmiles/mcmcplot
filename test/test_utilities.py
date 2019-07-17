@@ -318,3 +318,41 @@ class AppendToNrowNcolBasedOnShape(unittest.TestCase):
                 sh=sh, nrow=nrow, ncol=ncol)
         self.assertEqual(nrow, [2], msg='Expect [2]')
         self.assertEqual(ncol, [1], msg='Expect [1]')
+
+
+# --------------------------
+class SetupSubsample(unittest.TestCase):
+
+    def test_max_lt_nsimu(self):
+        skip = 1
+        maxpoints = 10
+        nsimu = 100
+        inds = utilities.setup_subsample(skip, maxpoints, nsimu)
+        self.assertTrue(isinstance(inds, np.ndarray),
+                        msg='Expect numpy array')
+        self.assertEqual(inds.shape, (10,), msg='Expect (10,)')
+
+    def test_max_gt_nsimu(self):
+        skip = 1
+        maxpoints = 1000
+        nsimu = 100
+        inds = utilities.setup_subsample(skip, maxpoints, nsimu)
+        self.assertTrue(isinstance(inds, np.ndarray),
+                        msg='Expect numpy array')
+        self.assertEqual(inds.shape, (100,), msg='Expect (100,)')
+        skip = 3
+        maxpoints = 1000
+        nsimu = 100
+        inds = utilities.setup_subsample(skip, maxpoints, nsimu)
+        self.assertTrue(isinstance(inds, np.ndarray),
+                        msg='Expect numpy array')
+        self.assertEqual(inds.shape, (34,), msg='Expect (34,)')
+
+    def test_max_eq_nsimu(self):
+        skip = 1
+        maxpoints = 100
+        nsimu = 100
+        inds = utilities.setup_subsample(skip, maxpoints, nsimu)
+        self.assertTrue(isinstance(inds, np.ndarray),
+                        msg='Expect numpy array')
+        self.assertEqual(inds.shape, (100,), msg='Expect (100,)')
