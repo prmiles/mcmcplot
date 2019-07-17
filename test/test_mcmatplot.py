@@ -18,7 +18,7 @@ class PlotDensityPanel(unittest.TestCase):
     def test_basic_plot_features(self):
         npar = 3
         chains = np.random.random_sample(size=(100, npar))
-        f, _ = MP.plot_density_panel(chains=chains)
+        f = MP.plot_density_panel(chains=chains)
         for ii in range(npar):
             name = str('$p_{{{}}}$'.format(ii))
             self.assertEqual(f.axes[ii].get_xlabel(), name,
@@ -28,13 +28,17 @@ class PlotDensityPanel(unittest.TestCase):
                              msg='Should be posterior')
         self.assertEqual(f.get_figwidth(), 5.0, msg='Width is 5in')
         self.assertEqual(f.get_figheight(), 4.0, msg='Height is 4in')
+        plt.close()
+        f, settings = MP.plot_density_panel(chains=chains, return_settings=True)
+        self.assertTrue(isinstance(settings, dict),
+                        msg='Expect dict return')
         plt.close()
 
     def test_basic_plot_features_with_hist_on(self):
         npar = 3
         chains = np.random.random_sample(size=(100, npar))
         settings = {'hist_on': True}
-        f, _ = MP.plot_density_panel(chains=chains, settings=settings)
+        f = MP.plot_density_panel(chains=chains, settings=settings)
         for ii in range(npar):
             name = str('$p_{{{}}}$'.format(ii))
             self.assertEqual(f.axes[ii].get_xlabel(), name,
@@ -45,13 +49,28 @@ class PlotDensityPanel(unittest.TestCase):
         self.assertEqual(f.get_figwidth(), 5.0, msg='Width is 5in')
         self.assertEqual(f.get_figheight(), 4.0, msg='Height is 4in')
         plt.close()
+        f, kde = MP.plot_density_panel(
+                chains=chains, settings=settings,
+                return_kde=True)
+        for ii in range(npar):
+            name = str('$p_{{{}}}$'.format(ii))
+            self.assertEqual(f.axes[ii].get_xlabel(), name,
+                             msg=str('Should be {}'.format(name)))
+            self.assertEqual(f.axes[ii].get_ylabel(),
+                             str('$\\pi$({}$|M^{}$)'.format(name, '{data}')),
+                             msg='Should be posterior')
+        self.assertEqual(f.get_figwidth(), 5.0, msg='Width is 5in')
+        self.assertEqual(f.get_figheight(), 4.0, msg='Height is 4in')
+        plt.close()
+        self.assertEqual(len(kde), 3,
+                        msg='Expect 3 kde functions')
 
 
 # --------------------------
 class PlotChainPanel(unittest.TestCase):
     def test_basic_plot_features_nsimu_lt_maxpoints(self):
         chains = np.random.random_sample(size=(100, 2))
-        f, _ = MP.plot_chain_panel(chains=chains)
+        f = MP.plot_chain_panel(chains=chains)
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         x2, y2 = f.axes[1].lines[0].get_xydata().T
         self.assertTrue(np.array_equal(y1, chains[:, 0]),
@@ -66,7 +85,7 @@ class PlotChainPanel(unittest.TestCase):
     def test_basic_plot_features_nsimu_gt_maxpoints(self):
         nsimu = 1000
         chains = np.random.random_sample(size=(nsimu, 2))
-        f, _ = MP.plot_chain_panel(chains=chains)
+        f = MP.plot_chain_panel(chains=chains)
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         x2, y2 = f.axes[1].lines[0].get_xydata().T
         skip = int(math.floor(nsimu/500))
@@ -82,7 +101,7 @@ class PlotChainPanel(unittest.TestCase):
     def test_basic_plot_features_nsimu_gt_maxpoints_with_pm2std(self):
         nsimu = 1000
         chains = np.random.random_sample(size=(nsimu, 2))
-        f, _ = MP.plot_chain_panel(chains=chains,
+        f = MP.plot_chain_panel(chains=chains,
                                    settings=dict(add_pm2std=True))
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         x2, y2 = f.axes[1].lines[0].get_xydata().T
@@ -100,6 +119,12 @@ class PlotChainPanel(unittest.TestCase):
         self.assertEqual(len(f.axes[1].lines), 4,
                          msg='Expect 4 lines')
         plt.close()
+        f, settings = MP.plot_chain_panel(
+                chains=chains, return_settings=True,
+                settings=dict(add_pm2std=True))
+        self.assertTrue(isinstance(settings, dict),
+                        msg='Expect dict return')
+        plt.close()
 
 
 # --------------------------
@@ -107,13 +132,17 @@ class PlotHistogramPanel(unittest.TestCase):
     def test_basic_plot_features_nsimu_lt_maxpoints(self):
         npar = 3
         chains = np.random.random_sample(size=(100, npar))
-        f, _ = MP.plot_histogram_panel(chains=chains)
+        f = MP.plot_histogram_panel(chains=chains)
         for ii in range(npar):
             self.assertEqual(f.axes[ii].get_xlabel(),
                              str('$p_{{{}}}$'.format(ii)),
                              msg=str('Should be $p_{{{}}}$'.format(ii)))
             self.assertEqual(f.axes[ii].get_ylabel(), '',
                              msg='Should be blank')
+        plt.close()
+        f, settings = MP.plot_histogram_panel(chains=chains, return_settings=True)
+        self.assertTrue(isinstance(settings, dict),
+                        msg='Expect dict return')
         plt.close()
 
 
@@ -122,7 +151,7 @@ class PlotPairwiseCorrelationPanel(unittest.TestCase):
 
     def test_basic_plot_features_nsimu_lt_maxpoints(self):
         chains = np.random.random_sample(size=(100, 3))
-        f, _ = MP.plot_pairwise_correlation_panel(chains=chains)
+        f = MP.plot_pairwise_correlation_panel(chains=chains)
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         x2, y2 = f.axes[1].lines[0].get_xydata().T
         x3, y3 = f.axes[1].lines[0].get_xydata().T
@@ -152,7 +181,7 @@ class PlotPairwiseCorrelationPanel(unittest.TestCase):
 
     def test_basic_plot_features_nsimu_lt_maxpoints_and_2_chains(self):
         chains = np.random.random_sample(size=(100, 2))
-        f, _ = MP.plot_pairwise_correlation_panel(chains=chains)
+        f = MP.plot_pairwise_correlation_panel(chains=chains)
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         self.assertTrue(np.array_equal(x1, chains[:, 0]),
                         msg='Expect x1 to match column 0')
@@ -168,7 +197,7 @@ class PlotPairwiseCorrelationPanel(unittest.TestCase):
 
     def test_basic_plot_features_2c_w_contours(self):
         chains = np.random.random_sample(size=(100, 2))
-        f, _ = MP.plot_pairwise_correlation_panel(
+        f = MP.plot_pairwise_correlation_panel(
                 chains=chains, settings=dict(add_5095_contours=True))
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         self.assertTrue(np.array_equal(x1, chains[:, 0]),
@@ -186,7 +215,7 @@ class PlotPairwiseCorrelationPanel(unittest.TestCase):
 
     def test_basic_plot_features_2c_w_contours_and_legend(self):
         chains = np.random.random_sample(size=(100, 2))
-        f, _ = MP.plot_pairwise_correlation_panel(
+        f = MP.plot_pairwise_correlation_panel(
                 chains=chains,
                 settings=dict(add_5095_contours=True, add_legend=True))
         x1, y1 = f.axes[0].lines[0].get_xydata().T
@@ -204,7 +233,7 @@ class PlotChainMetrics(unittest.TestCase):
 
     def test_basic_plot_features(self):
         chains = np.random.random_sample(size=(100, 1))
-        f, _ = MP.plot_chain_metrics(chain=chains, name=['a1'])
+        f = MP.plot_chain_metrics(chain=chains, name=['a1'])
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         self.assertTrue(np.array_equal(y1, chains[:, 0]),
                         msg='Expect y1 to match column 1')
@@ -223,7 +252,7 @@ class PlotChainMetrics(unittest.TestCase):
 
     def test_figsize_plot_features(self):
         chains = np.random.random_sample(size=(100, 1))
-        f, _ = MP.plot_chain_metrics(chain=chains, name=['a1'],
+        f = MP.plot_chain_metrics(chain=chains, name=['a1'],
                                      settings={'fig': dict(figsize=(10, 2))})
         x1, y1 = f.axes[0].lines[0].get_xydata().T
         self.assertTrue(np.array_equal(y1, chains[:, 0]),
@@ -239,6 +268,13 @@ class PlotChainMetrics(unittest.TestCase):
                          msg='Strings should match')
         self.assertEqual(f.get_figwidth(), 10.0, msg='Width is 10in')
         self.assertEqual(f.get_figheight(), 2.0, msg='Height is 2in')
+        plt.close()
+        f, settings = MP.plot_chain_metrics(
+                chain=chains, name=['a1'],
+                settings={'fig': dict(figsize=(10, 2))},
+                return_settings=True)
+        self.assertTrue(isinstance(settings, dict),
+                        msg='Expect dict return')
         plt.close()
 
 

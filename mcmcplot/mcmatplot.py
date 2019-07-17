@@ -27,7 +27,8 @@ except ImportError as e:
 
 
 # --------------------------------------------
-def plot_density_panel(chains, names=None, settings=None):
+def plot_density_panel(chains, names=None, settings=None,
+                       return_kde=False, return_settings=False):
     '''
     Plot marginal posterior densities
 
@@ -58,6 +59,7 @@ def plot_density_panel(chains, names=None, settings=None):
     nsimu, nparam = chains.shape  # number of rows, number of columns
     ns1, ns2 = generate_subplot_grid(nparam)
     names = generate_names(nparam, names)
+    kdehandle = []
     f = plt.figure(**settings['fig'])  # initialize figure
     for ii in range(nparam):
         # define chain
@@ -76,11 +78,21 @@ def plot_density_panel(chains, names=None, settings=None):
         plt.ylabel(str('$\\pi$({}$|M^{}$)'.format(names[ii], '{data}')),
                    **settings['ylabel'])
         plt.tight_layout(rect=[0, 0.03, 1, 0.95], h_pad=1.0)  # adjust spacing
-    return f, settings
+        kdehandle.append(kde)
+    # setup output
+    if return_kde is True and return_settings is True:
+        return f, settings, kdehandle
+    elif return_kde is True and return_settings is False:
+        return f, kdehandle
+    elif return_kde is False and return_settings is True:
+        return f, settings
+    else:
+        return f
 
 
 # --------------------------------------------
-def plot_histogram_panel(chains, names=None, settings=None):
+def plot_histogram_panel(chains, names=None,
+                         settings=None, return_settings=False):
     """
     Plot histogram from each parameter's sampling history
 
@@ -123,11 +135,15 @@ def plot_histogram_panel(chains, names=None, settings=None):
         if settings['turn_yticks_on'] is False:
             ax.get_yaxis().set_ticks([])
         plt.tight_layout(rect=[0, 0.03, 1, 0.95], h_pad=1.0)  # adjust spacing
-    return f, settings
+    if return_settings is True:
+        return f, settings
+    else:
+        return f
 
 
 # --------------------------------------------
-def plot_chain_panel(chains, names=None, settings=None):
+def plot_chain_panel(chains, names=None, settings=None,
+                     return_settings=False):
     """
     Plot sampling chain for each parameter
 
@@ -185,11 +201,15 @@ def plot_chain_panel(chains, names=None, settings=None):
                      **settings['sig'])
             plt.plot(range(0, nsimu), np.ones([nsimu, 1])*mu - 2*sig,
                      **settings['sig'])
-    return f, settings
+    if return_settings is True:
+        return f, settings
+    else:
+        return f
 
 
 # --------------------------------------------
-def plot_pairwise_correlation_panel(chains, names=None, settings=None):
+def plot_pairwise_correlation_panel(chains, names=None, settings=None,
+                                    return_settings=False):
     """
     Plot pairwise correlation for each parameter
 
@@ -263,11 +283,15 @@ def plot_pairwise_correlation_panel(chains, names=None, settings=None):
         ax = plt.gca()
         h, labs = ax.get_legend_handles_labels()
         plt.figlegend(h, labs, **settings['legend'])
-    return f, settings
+    if return_settings is True:
+        return f, settings
+    else:
+        return f
 
 
 # --------------------------------------------
-def plot_chain_metrics(chain, name=None, settings=None):
+def plot_chain_metrics(chain, name=None, settings=None,
+                       return_settings=False):
     '''
     Plot chain metrics for individual chain
 
@@ -311,7 +335,10 @@ def plot_chain_metrics(chain, name=None, settings=None):
     plt.xlabel(name, **settings['xlabel'])
     plt.ylabel(str('Histogram of {}-chain'.format(name)), **settings['ylabel'])
     plt.tight_layout(rect=[0, 0.03, 1, 0.95], h_pad=1.0)  # adjust spacing
-    return f, settings
+    if return_settings is True:
+        return f, settings
+    else:
+        return f
 
 
 class Plot:
