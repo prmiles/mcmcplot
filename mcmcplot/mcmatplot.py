@@ -346,26 +346,3 @@ def plot_chain_metrics(chain, name=None, settings=None,
         return f, settings
     else:
         return f
-
-
-class Plot:
-    '''
-    Wrapper routines for analyzing/plotting sampling chains from MCMC process.
-
-    Uses methods from the `matplotlib` package:
-
-    https://matplotlib.org/
-
-    Attributes:
-        - :meth:`~plot_density_panel`
-        - :meth:`~plot_chain_panel`
-        - :meth:`~plot_pairwise_correlation_panel`
-        - :meth:`~plot_histogram_panel`
-        - :meth:`~plot_chain_metrics`
-    '''
-    def __init__(self):
-        self.plot_density_panel = plot_density_panel
-        self.plot_chain_panel = plot_chain_panel
-        self.plot_pairwise_correlation_panel = plot_pairwise_correlation_panel
-        self.plot_histogram_panel = plot_histogram_panel
-        self.plot_chain_metrics = plot_chain_metrics
