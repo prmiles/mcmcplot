@@ -36,14 +36,28 @@ def plot_density_panel(chains, names=None, settings=None,
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
+
+    Kwargs:
         * **names** (:py:class:`list`): List of strings - name \
-        of each parameter
+        of each parameter. Default: `None`
         * **settings** (:py:class:`dict`): Settings for features \
-        of this method.
+        of this method. Default: `None`
+        * **return_kde** (:py:class:`bool`): Flag to return \
+          handles of functions from KDE. Default: `False`
+        * **return_settings** (:py:class:`bool`): Flag to return \
+        figure settings. Default: `False`
+        * **hist_on** (:py:class:`bool`): Flag to include histogram \
+          on plot with marginal distribution.
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually \
-        used in program)
+        * If `return_settings=True` and `return_kde=True`, \
+          (:py:class:`tuple`): (figure handle, settings used, \
+          kde handles)
+        * If `return_settings=True` and `return_kde=False`, \
+          (:py:class:`tuple`): (figure handle, settings used)
+        * If `return_settings=False` and `return_kde=True`, \
+          (:py:class:`tuple`): (figure handle, kde handles)
+        * Otherwise, figure handle
     '''
     default_settings = {
             'maxpoints': 500,
@@ -99,14 +113,19 @@ def plot_histogram_panel(chains, names=None,
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
+
+    Kwargs:
         * **names** (:py:class:`list`): List of strings - name \
-        of each parameter
+        of each parameter. Default: `None`
         * **settings** (:py:class:`dict`): Settings for features \
-        of this method.
+        of this method. Default: `None`
+        * **return_settings** (:py:class:`bool`): Flag to return \
+        figure settings. Default: `False`
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually \
-        used in program)
+        * If `return_settings=True`, (:py:class:`tuple`): \
+        (figure handle, settings actually used in program)
+        * Otherwise, figure handle
     """
     default_settings = {
             'maxpoints': 500,
@@ -150,6 +169,8 @@ def plot_chain_panel(chains, names=None, settings=None,
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
+
+    Kwargs:
         * **names** (:py:class:`list`): List of strings - name \
         of each parameter
         * **settings** (:py:class:`dict`): Settings for features \
@@ -158,10 +179,13 @@ def plot_chain_panel(chains, names=None, settings=None,
           plotting elements from the chain
         * **maxpoints** (:py:class:`int`): Max number of display points
           - keeps scatter plot from becoming overcrowded
+        * **return_settings** (:py:class:`bool`): Flag to return \
+        figure settings. Default: `False`
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually \
-        used in program)
+        * If `return_settings=True`, (:py:class:`tuple`): \
+        (figure handle, settings actually used in program)
+        * Otherwise, figure handle
     """
     default_settings = {
             'fig': dict(figsize=(5, 4), dpi=100),
@@ -219,6 +243,8 @@ def plot_pairwise_correlation_panel(chains, names=None, settings=None,
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain \
           for each parameter
+
+    Kwargs:
         * **names** (:py:class:`list`): List of strings - name \
           of each parameter
         * **settings** (:py:class:`dict`): Settings for figure \
@@ -227,10 +253,13 @@ def plot_pairwise_correlation_panel(chains, names=None, settings=None,
           plotting elements from the chain
         * **maxpoints** (py:class:`int`): Maximum allowable number of points
           in plot.
+        * **return_settings** (:py:class:`bool`): Flag to return \
+        figure settings. Default: `False`
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually \
-        used in program)
+        * If `return_settings=True`, (:py:class:`tuple`): \
+        (figure handle, settings actually used in program)
+        * Otherwise, figure handle
     """
     default_settings = {
             'fig': dict(figsize=(7, 5), dpi=100),
@@ -308,13 +337,18 @@ def plot_chain_metrics(chain, name=None, settings=None,
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for specific parameter
+
+    Kwargs:
         * **names** (:py:class:`str`): Name of each parameter
         * **settings** (:py:class:`dict`): Settings for features \
         of this method.
+        * **return_settings** (:py:class:`bool`): Flag to return \
+        figure settings. Default: `False`
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually \
-        used in program)
+        * If `return_settings=True`, (:py:class:`tuple`): \
+        (figure handle, settings actually used in program)
+        * Otherwise, figure handle
     '''
     default_settings = {
             'skip': 1,

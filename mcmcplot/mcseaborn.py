@@ -23,18 +23,23 @@ def plot_joint_distributions(chains, names=None,
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
+
+    Kwargs:
         * **names** (:py:class:`list`): List of strings - name \
-        of each parameter
+        of each parameter. Default: `None`
         * **settings** (:py:class:`dict`): Settings for features \
-        of this method.
+        of this method. Default: `None`
         * **skip** (:py:class:`int`): Indicates step size to be used when
-          plotting elements from the chain
-        * **maxpoints** (:py:class:`int`): Max number of display points
-          - keeps scatter plot from becoming overcrowded
+          sampling elements from the chain. Default: `1`
+        * **maxpoints** (:py:class:`int`): Max number of sample points
+          - keeps generation of KDE shorter. Default: `500`
+        * **return_settings** (:py:class:`bool`): Flag to return \
+        figure settings. Default: `False`
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually \
-        used in program)
+        * If `return_settings=True`, (:py:class:`tuple`): \
+        (figure handle, settings actually used in program)
+        * Otherwise, figure handle
     """
     default_settings = dict(
             kind='kde',
@@ -76,16 +81,21 @@ def plot_paired_density_matrix(chains, names=None,
     Args:
         * **chains** (:class:`~numpy.ndarray`): Sampling chain \
         for each parameter
+
+    Kwargs:
         * **names** (:py:class:`list`): List of strings - name \
-        of each parameter
-        * **sns_style** (:py:class:`str`): Style for seaborn plot. \
-        Default is `white`.
+        of each parameter. Default: `None`
         * **settings** (:py:class:`dict`): Settings for features \
-        of this method.
+        of this method. Default: `None`
+        * **index** (:py:class:`list`): Category for each row of \
+        chain. Default: `None`
+        * **return_settings** (:py:class:`bool`): Flag to return \
+        figure settings. Default: `False`
 
     Returns:
-        * (:py:class:`tuple`): (figure handle, settings actually \
-        used in program)
+        * If `return_settings=True`, (:py:class:`tuple`): \
+        (figure handle, settings actually used in program)
+        * Otherwise, figure handle
     """
     default_settings = {
             'skip': 1,
