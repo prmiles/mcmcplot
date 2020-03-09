@@ -3,6 +3,8 @@ sudo: false
 python:
   - 3.6
 cache: pip
+services:
+  - xvfb
 install:
   - pip install flake8
   - pip install -r requirements.txt
